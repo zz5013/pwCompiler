@@ -1,0 +1,10 @@
+var
+a : {1..50};
+
+begin
+a := 10;
+while true do [100]
+    a := a + 1
+od;
+stop;
+end

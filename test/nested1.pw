@@ -1,0 +1,17 @@
+var
+a : {1, 2, 3};
+b : {1, 2, 3};
+
+begin
+a ?= {1, 2, 3};
+b ?= {1, 2, 3};
+while a < 3 do
+    a := a + 1;
+    if b < a then
+        b := a
+    else
+        skip
+    fi
+od;
+stop;
+end

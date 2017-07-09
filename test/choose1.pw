@@ -1,0 +1,7 @@
+var
+a : {1..10};
+
+begin
+choose 1/2: a ?= {1..5} or 1/2: a ?= {6..10} ro;
+stop;
+end

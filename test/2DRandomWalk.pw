@@ -1,0 +1,11 @@
+var
+  x : {-10 .. 10};
+  y : {-10 .. 10};
+begin
+  x := 0;
+  y := 0;
+  while ((x != 10) || (x != -10) || (y != 10) || (y != -10)) do [500]
+    choose 1/2 : choose 1/2 : x := x + 1 or 1/2 : x := x - 1 ro or 1/2 : choose 1/2 : y := y + 1 or 1/2 : y := y - 1 ro ro
+  od;
+stop;
+end
