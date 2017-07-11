@@ -9,7 +9,7 @@ sigma = tf.Variable(np.full((1,441), 1.0/441, dtype=float), name = "sigma")
 
 # Generate Update Operator
 u = np.zeros((21, 21))
-u[:, 10] = 1
+u[:, 11] = 1
 updateOp = np.array([1.0])
 updateOp = np.kron(updateOp, u)
 updateOp = np.kron(updateOp, np.identity(21))
@@ -17,11 +17,27 @@ updateOp1 = tf.Variable(updateOp)
 
 # Generate Update Operator
 u = np.zeros((21, 21))
-u[:, 10] = 1
+u[:, 9] = 1
+updateOp = np.array([1.0])
+updateOp = np.kron(updateOp, u)
+updateOp = np.kron(updateOp, np.identity(21))
+updateOp2 = tf.Variable(updateOp)
+
+# Generate Update Operator
+u = np.zeros((21, 21))
+u[:, 11] = 1
 updateOp = np.array([1.0])
 updateOp = np.kron(updateOp, np.identity(21))
 updateOp = np.kron(updateOp, u)
-updateOp2 = tf.Variable(updateOp)
+updateOp3 = tf.Variable(updateOp)
+
+# Generate Update Operator
+u = np.zeros((21, 21))
+u[:, 9] = 1
+updateOp = np.array([1.0])
+updateOp = np.kron(updateOp, np.identity(21))
+updateOp = np.kron(updateOp, u)
+updateOp4 = tf.Variable(updateOp)
 
 # Generate Test Operator
 t = np.zeros((21, 21))
@@ -35,35 +51,6 @@ t[6, 6] = 1
 t[7, 7] = 1
 t[8, 8] = 1
 t[9, 9] = 1
-t[10, 10] = 1
-t[11, 11] = 1
-t[12, 12] = 1
-t[13, 13] = 1
-t[14, 14] = 1
-t[15, 15] = 1
-t[16, 16] = 1
-t[17, 17] = 1
-t[18, 18] = 1
-t[19, 19] = 1
-testOp = np.array([1.0])
-testOp =  np.kron(testOp, t)
-testOp =  np.kron(testOp, np.identity(21))
-testTemp1 = testOp
-testOp1 = tf.Variable(testOp)
-testNOp1 = tf.Variable(np.identity(441) - testOp)
-
-# Generate Test Operator
-t = np.zeros((21, 21))
-t[1, 1] = 1
-t[2, 2] = 1
-t[3, 3] = 1
-t[4, 4] = 1
-t[5, 5] = 1
-t[6, 6] = 1
-t[7, 7] = 1
-t[8, 8] = 1
-t[9, 9] = 1
-t[10, 10] = 1
 t[11, 11] = 1
 t[12, 12] = 1
 t[13, 13] = 1
@@ -77,15 +64,6 @@ t[20, 20] = 1
 testOp = np.array([1.0])
 testOp =  np.kron(testOp, t)
 testOp =  np.kron(testOp, np.identity(21))
-testTemp2 = testOp
-testOp2 = tf.Variable(testOp)
-testNOp2 = tf.Variable(np.identity(441) - testOp)
-
-# Generate Test Operator
-testOp = np.zeros((441, 441))
-for i in range(441):
-    if testTemp1[i, i] == 1 or testTemp2[i, i] == 1:
-        testOp[i, i] = 1
 testTemp3 = testOp
 testOp3 = tf.Variable(testOp)
 testNOp3 = tf.Variable(np.identity(441) - testOp)
@@ -102,7 +80,6 @@ t[6, 6] = 1
 t[7, 7] = 1
 t[8, 8] = 1
 t[9, 9] = 1
-t[10, 10] = 1
 t[11, 11] = 1
 t[12, 12] = 1
 t[13, 13] = 1
@@ -112,6 +89,7 @@ t[16, 16] = 1
 t[17, 17] = 1
 t[18, 18] = 1
 t[19, 19] = 1
+t[20, 20] = 1
 testOp = np.array([1.0])
 testOp =  np.kron(testOp, np.identity(21))
 testOp =  np.kron(testOp, t)
@@ -127,44 +105,6 @@ for i in range(441):
 testTemp5 = testOp
 testOp5 = tf.Variable(testOp)
 testNOp5 = tf.Variable(np.identity(441) - testOp)
-
-# Generate Test Operator
-t = np.zeros((21, 21))
-t[1, 1] = 1
-t[2, 2] = 1
-t[3, 3] = 1
-t[4, 4] = 1
-t[5, 5] = 1
-t[6, 6] = 1
-t[7, 7] = 1
-t[8, 8] = 1
-t[9, 9] = 1
-t[10, 10] = 1
-t[11, 11] = 1
-t[12, 12] = 1
-t[13, 13] = 1
-t[14, 14] = 1
-t[15, 15] = 1
-t[16, 16] = 1
-t[17, 17] = 1
-t[18, 18] = 1
-t[19, 19] = 1
-t[20, 20] = 1
-testOp = np.array([1.0])
-testOp =  np.kron(testOp, np.identity(21))
-testOp =  np.kron(testOp, t)
-testTemp6 = testOp
-testOp6 = tf.Variable(testOp)
-testNOp6 = tf.Variable(np.identity(441) - testOp)
-
-# Generate Test Operator
-testOp = np.zeros((441, 441))
-for i in range(441):
-    if testTemp5[i, i] == 1 or testTemp6[i, i] == 1:
-        testOp[i, i] = 1
-testTemp7 = testOp
-testOp7 = tf.Variable(testOp)
-testNOp7 = tf.Variable(np.identity(441) - testOp)
 
 # Generate Update Operator
 u = np.zeros((441, 441))
@@ -610,14 +550,7 @@ u[438, 438] = 1
 u[439, 439] = 1
 u[440, 440] = 1
 updateOp = u
-updateOp3 = tf.Variable(updateOp)
-
-# Define CHOOSE Statement
-def choose9():
-    return tf.less(tf.random_uniform([]), 0.5)
-def first9(sigma):
-    sigma = tf.matmul(sigma, updateOp3)
-    return sigma
+updateOp5 = tf.Variable(updateOp)
 
 # Generate Update Operator
 u = np.zeros((441, 441))
@@ -1063,19 +996,7 @@ u[438, 417] = 1
 u[439, 418] = 1
 u[440, 419] = 1
 updateOp = u
-updateOp4 = tf.Variable(updateOp)
-
-# Continue Defining CHOOSE
-def second9(sigma):
-    sigma = tf.matmul(sigma, updateOp4)
-    return sigma
-
-# Define CHOOSE Statement
-def choose8():
-    return tf.less(tf.random_uniform([]), 0.5)
-def first8(sigma):
-    sigma = tf.cond(choose9(), lambda: first9(sigma), lambda: second9(sigma))
-    return sigma
+updateOp6 = tf.Variable(updateOp)
 
 # Generate Update Operator
 u = np.zeros((441, 441))
@@ -1521,14 +1442,7 @@ u[438, 439] = 1
 u[439, 440] = 1
 u[440, 440] = 1
 updateOp = u
-updateOp5 = tf.Variable(updateOp)
-
-# Define CHOOSE Statement
-def choose10():
-    return tf.less(tf.random_uniform([]), 0.5)
-def first10(sigma):
-    sigma = tf.matmul(sigma, updateOp5)
-    return sigma
+updateOp7 = tf.Variable(updateOp)
 
 # Generate Update Operator
 u = np.zeros((441, 441))
@@ -1974,37 +1888,56 @@ u[438, 437] = 1
 u[439, 438] = 1
 u[440, 439] = 1
 updateOp = u
-updateOp6 = tf.Variable(updateOp)
-
-# Continue Defining CHOOSE
-def second10(sigma):
-    sigma = tf.matmul(sigma, updateOp6)
-    return sigma
-
-# Continue Defining CHOOSE
-def second8(sigma):
-    sigma = tf.cond(choose10(), lambda: first10(sigma), lambda: second10(sigma))
-    return sigma
+updateOp8 = tf.Variable(updateOp)
 
 # Define WHILE Statement
-loopCount7 = tf.Variable(0)
-def condition7(sigma, loopCount7):
-    sigma = tf.matmul(sigma, testOp7)
-    return tf.logical_and(tf.logical_not(tf.reduce_all(tf.equal(sigma, tf.zeros([441], dtype=tf.float64)))), tf.less(loopCount7, tf.constant(500)))
-def body7(sigma, loopCount7):
-    loopCount7 = tf.add(loopCount7, tf.constant(1))
-    outOfLoop = tf.matmul(sigma, testNOp7)
-    sigma = tf.matmul(sigma, testOp7)
-    sigma = tf.cond(choose8(), lambda: first8(sigma), lambda: second8(sigma))
+loopCount5 = tf.Variable(0)
+def condition5(sigma, loopCount5):
+    sigma = tf.matmul(sigma, testOp5)
+    return tf.logical_and(tf.logical_not(tf.reduce_all(tf.equal(sigma, tf.zeros([441], dtype=tf.float64)))), tf.less(loopCount5, tf.constant(10000)))
+def body5(sigma, loopCount5):
+    loopCount5 = tf.add(loopCount5, tf.constant(1))
+    outOfLoop = tf.matmul(sigma, testNOp5)
+    sigma = tf.matmul(sigma, testOp5)
+    sigma6_ogn = sigma
+    sigma = tf.matmul(sigma, updateOp5)
+    sigma6_choose1 = sigma
+    sigma = sigma6_ogn
+    sigma = tf.matmul(sigma, updateOp6)
+    sigma6_choose2 = sigma
+    sigma = sigma6_ogn
+    sigma = tf.matmul(sigma, updateOp7)
+    sigma6_choose3 = sigma
+    sigma = sigma6_ogn
+    sigma = tf.matmul(sigma, updateOp8)
+    sigma6_choose4 = sigma
+    sigma = tf.matmul(sigma6_choose1, tf.constant(0.25*np.identity(441), dtype=tf.float64))
+    sigma = tf.add(sigma, tf.matmul(sigma6_choose2, tf.constant(0.25*np.identity(441), dtype=tf.float64)))
+    sigma = tf.add(sigma, tf.matmul(sigma6_choose3, tf.constant(0.25*np.identity(441), dtype=tf.float64)))
+    sigma = tf.add(sigma, tf.matmul(sigma6_choose4, tf.constant(0.25*np.identity(441), dtype=tf.float64)))
     sigma = tf.add(sigma, outOfLoop)
-    return sigma, loopCount7
+    return sigma, loopCount5
 
 # Main Program
 with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
+    sigma1_ogn = sigma
     sigma = tf.matmul(sigma, updateOp1)
+    sigma1_choose1 = sigma
+    sigma = sigma1_ogn
     sigma = tf.matmul(sigma, updateOp2)
-    sigma, loopCount7 = tf.while_loop(condition7, body7, [sigma, loopCount7])
+    sigma1_choose2 = sigma
+    sigma = tf.matmul(sigma1_choose1, tf.constant(0.5*np.identity(441), dtype=tf.float64))
+    sigma = tf.add(sigma, tf.matmul(sigma1_choose2, tf.constant(0.5*np.identity(441), dtype=tf.float64)))
+    sigma2_ogn = sigma
+    sigma = tf.matmul(sigma, updateOp3)
+    sigma2_choose1 = sigma
+    sigma = sigma2_ogn
+    sigma = tf.matmul(sigma, updateOp4)
+    sigma2_choose2 = sigma
+    sigma = tf.matmul(sigma2_choose1, tf.constant(0.5*np.identity(441), dtype=tf.float64))
+    sigma = tf.add(sigma, tf.matmul(sigma2_choose2, tf.constant(0.5*np.identity(441), dtype=tf.float64)))
+    sigma, loopCount5 = tf.while_loop(condition5, body5, [sigma, loopCount5])
     print sess.run(sigma)
 
 # To Show Graph in Tensorboard
