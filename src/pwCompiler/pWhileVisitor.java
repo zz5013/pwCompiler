@@ -215,11 +215,31 @@ public interface pWhileVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitDecimal(pWhileParser.DecimalContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code oneOrZero}
+	 * labeled alternative in {@link pWhileParser#pr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOneOrZero(pWhileParser.OneOrZeroContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code prVar}
+	 * labeled alternative in {@link pWhileParser#pr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPrVar(pWhileParser.PrVarContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link pWhileParser#valueRange}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitValueRange(pWhileParser.ValueRangeContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link pWhileParser#para}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPara(pWhileParser.ParaContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link pWhileParser#prog}.
 	 * @param ctx the parse tree

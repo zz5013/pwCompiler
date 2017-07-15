@@ -356,6 +356,30 @@ public interface pWhileListener extends ParseTreeListener {
 	 */
 	void exitDecimal(pWhileParser.DecimalContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code oneOrZero}
+	 * labeled alternative in {@link pWhileParser#pr}.
+	 * @param ctx the parse tree
+	 */
+	void enterOneOrZero(pWhileParser.OneOrZeroContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code oneOrZero}
+	 * labeled alternative in {@link pWhileParser#pr}.
+	 * @param ctx the parse tree
+	 */
+	void exitOneOrZero(pWhileParser.OneOrZeroContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code prVar}
+	 * labeled alternative in {@link pWhileParser#pr}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrVar(pWhileParser.PrVarContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code prVar}
+	 * labeled alternative in {@link pWhileParser#pr}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrVar(pWhileParser.PrVarContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link pWhileParser#valueRange}.
 	 * @param ctx the parse tree
 	 */
@@ -365,6 +389,16 @@ public interface pWhileListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitValueRange(pWhileParser.ValueRangeContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link pWhileParser#para}.
+	 * @param ctx the parse tree
+	 */
+	void enterPara(pWhileParser.ParaContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link pWhileParser#para}.
+	 * @param ctx the parse tree
+	 */
+	void exitPara(pWhileParser.ParaContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link pWhileParser#prog}.
 	 * @param ctx the parse tree

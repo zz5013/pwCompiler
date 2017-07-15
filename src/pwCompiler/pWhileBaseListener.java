@@ -376,6 +376,30 @@ public class pWhileBaseListener implements pWhileListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterOneOrZero(pWhileParser.OneOrZeroContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOneOrZero(pWhileParser.OneOrZeroContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPrVar(pWhileParser.PrVarContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPrVar(pWhileParser.PrVarContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterValueRange(pWhileParser.ValueRangeContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -383,6 +407,18 @@ public class pWhileBaseListener implements pWhileListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitValueRange(pWhileParser.ValueRangeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPara(pWhileParser.ParaContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPara(pWhileParser.ParaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

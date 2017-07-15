@@ -364,12 +364,43 @@ public class PrintVisitPath implements pWhileListener {
      * <p>The default implementation does nothing.</p>
      */
     @Override public void exitValueRange(pWhileParser.ValueRangeContext ctx) {System.err.println("enter/exit node");}
+
+    @Override
+    public void enterPara(pWhileParser.ParaContext ctx) {
+        System.err.println("enter/exit node");
+    }
+
+    @Override
+    public void exitPara(pWhileParser.ParaContext ctx) {
+        System.err.println("enter/exit node");
+    }
+
     /**
      * {@inheritDoc}
      *
      * <p>The default implementation does nothing.</p>
      */
     @Override public void exitDecimal(pWhileParser.DecimalContext ctx) {System.err.println("enter/exit node");}
+
+    @Override
+    public void enterOneOrZero(pWhileParser.OneOrZeroContext ctx) {
+        System.err.println("enter/exit node");
+    }
+
+    @Override
+    public void exitOneOrZero(pWhileParser.OneOrZeroContext ctx) {
+        System.err.println("enter/exit node");
+    }
+
+    @Override
+    public void enterPrVar(pWhileParser.PrVarContext ctx) {
+        System.err.println("enter/exit node");
+    }
+
+    @Override
+    public void exitPrVar(pWhileParser.PrVarContext ctx) {
+        System.err.println("enter/exit node");
+    }
 
 
     @Override public void enterDecimal(pWhileParser.DecimalContext ctx) {System.err.println("enter/exit node");}

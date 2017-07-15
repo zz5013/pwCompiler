@@ -1,6 +1,8 @@
 package pwCompiler;
 
 
+import org.antlr.v4.runtime.tree.TerminalNode;
+
 import javax.swing.*;
 
 import java.io.PrintWriter;
@@ -25,6 +27,7 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
     private int currentScope;
     private ArrayList<ArrayList<String>> scopeCode;
     private int totaldim;
+    private boolean paraChoose;
 
 
 
@@ -39,6 +42,7 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
         UOCounter = 0;
         currentScope = 0;
         totaldim = 1;
+        paraChoose = false;
 
     }
 
@@ -119,8 +123,8 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
         for (ArrayList<Object> scope : varScope.values()) {
             num = num * scope.size();
         }
-        pw.println("# Declare Variable Scopes");
-        pw.println("sigma = tf.Variable(np.full((1," + num + "), 1.0/" + num + ", dtype=float), name = \"sigma\")");
+        pw.println("    # Declare Variable Scopes");
+        pw.println("    sigma = tf.Variable(np.full((1," + num + "), 1.0/" + num + ", dtype=float), name = \"sigma\")");
         pw.println();
         return null;
     }
@@ -154,7 +158,7 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
                 }
             }
 
-            pw.println("# Generate Update Operator");
+            pw.println("    # Generate Update Operator");
 /*
             pw.println("u" + " = np.zeros((" + varScope.get(ctx.IDENT().getText()).size() + ", " +
                     varScope.get(ctx.IDENT().getText()).size() + "))");
@@ -176,7 +180,7 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
             }
 */
 
-            pw.println("u = np.zeros((" + totaldim + ", " + totaldim + "))");
+            pw.println("    u = np.zeros((" + totaldim + ", " + totaldim + "))");
             int[] index = new int[varList.size()];
             for (int i = 0; i < totaldim; i++) {
                 int divider = totaldim;
@@ -212,19 +216,19 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
 
 
                 }
-                pw.println("u[" + i + ", " + remainder + "] = 1");
+                pw.println("    u[" + i + ", " + remainder + "] = 1");
 
 
             }
 
-            pw.println("updateOp = u");
+            pw.println("    updateOp = u");
 
 
 
             UOCounter++;
-            pw.println("updateOp" + UOCounter + " = tf.Variable(updateOp)");
+            pw.println("    updateOp" + UOCounter + " = tf.Variable(updateOp)");
             pw.println();
-            scopeCode.get(currentScope).add("    sigma = tf.matmul(sigma, updateOp" + UOCounter + ")");
+            scopeCode.get(currentScope).add("        sigma = tf.matmul(sigma, updateOp" + UOCounter + ")");
 
 
         } else {
@@ -251,27 +255,27 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
                     indexOfVar = i + 1;
                 }
             }
-            pw.println("# Generate Update Operator");
-            pw.println("u = np.zeros((" + varScope.get(ctx.IDENT().getText()).size() + ", " +
+            pw.println("    # Generate Update Operator");
+            pw.println("    u = np.zeros((" + varScope.get(ctx.IDENT().getText()).size() + ", " +
                     varScope.get(ctx.IDENT().getText()).size() + "))");
-            pw.println("u[:, " + (indexOfAss - 1) + "] = 1");
-            pw.println("updateOp = np.array([1.0])");
+            pw.println("    u[:, " + (indexOfAss - 1) + "] = 1");
+            pw.println("    updateOp = np.array([1.0])");
 
             //Tensor Product in Update Operator
             for (int i = 0; i < varList.size(); i++) {
                 if (i + 1 != indexOfVar) {
-                    pw.println("updateOp = np.kron(updateOp, np.identity(" + varScope.get(varList.get(i)).size() + "))");
+                    pw.println("    updateOp = np.kron(updateOp, np.identity(" + varScope.get(varList.get(i)).size() + "))");
                 } else {
-                    pw.println("updateOp = np.kron(updateOp, u)");
+                    pw.println("    updateOp = np.kron(updateOp, u)");
                 }
             }
 
             UOCounter++;
 
-            pw.println("updateOp" + UOCounter + " = tf.Variable(updateOp)");
+            pw.println("    updateOp" + UOCounter + " = tf.Variable(updateOp)");
             pw.println();
 
-            scopeCode.get(currentScope).add("    sigma = tf.matmul(sigma, updateOp" + UOCounter + ")");
+            scopeCode.get(currentScope).add("        sigma = tf.matmul(sigma, updateOp" + UOCounter + ")");
 
         }
 
@@ -304,32 +308,32 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
                 indexOfVar = i+1;
             }
         }
-        pw.println("# Generate Update Operator");
+        pw.println("    # Generate Update Operator");
 
         for (Integer indAss : indexOfAss) {
-            pw.println("u_" + indAss + " = np.zeros((" + varScope.get(ctx.IDENT().getText()).size() + ", " +
+            pw.println("    u_" + indAss + " = np.zeros((" + varScope.get(ctx.IDENT().getText()).size() + ", " +
                     varScope.get(ctx.IDENT().getText()).size() + "))");
-            pw.println("u_" + indAss + "[:, " + (indAss - 1) + "] = 1");
-            pw.println("uo" + (indexOfAss.indexOf(indAss) + 1) + " = np.array([1.0])");
+            pw.println("    u_" + indAss + "[:, " + (indAss - 1) + "] = 1");
+            pw.println("    uo" + (indexOfAss.indexOf(indAss) + 1) + " = np.array([1.0])");
 
             //Tensor Product in Update Operator
             for (int i = 0; i < varList.size(); i++) {
                 if (i + 1 != indexOfVar) {
-                    pw.println("uo" + (indexOfAss.indexOf(indAss) + 1) + " = np.kron(uo" + (indexOfAss.indexOf(indAss) + 1) + ", np.identity(" + varScope.get(varList.get(i)).size() + "))");
+                    pw.println("    uo" + (indexOfAss.indexOf(indAss) + 1) + " = np.kron(uo" + (indexOfAss.indexOf(indAss) + 1) + ", np.identity(" + varScope.get(varList.get(i)).size() + "))");
                 } else {
-                    pw.println("uo" + (indexOfAss.indexOf(indAss) + 1) + " = np.kron(uo" + (indexOfAss.indexOf(indAss) + 1) + ", u_" + indAss + ")");
+                    pw.println("    uo" + (indexOfAss.indexOf(indAss) + 1) + " = np.kron(uo" + (indexOfAss.indexOf(indAss) + 1) + ", u_" + indAss + ")");
                 }
             }
         }
         UOCounter++;
-        pw.print("updateOp" + UOCounter + " = tf.Variable(1.0/" + indexOfAss.size() + " * (");
+        pw.print("    updateOp" + UOCounter + " = tf.Variable(1.0/" + indexOfAss.size() + " * (");
         pw.print("uo" + 1);
         for (int i = 1; i < indexOfAss.size(); i++) {
             pw.print(" + uo" + (i+1));
         }
         pw.println("))");
         pw.println();
-        scopeCode.get(currentScope).add("    sigma = tf.matmul(sigma, updateOp" + UOCounter + ")");
+        scopeCode.get(currentScope).add("        sigma = tf.matmul(sigma, updateOp" + UOCounter + ")");
 
 
         return null;
@@ -471,130 +475,130 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
             }
         } else */
         if (e1.valueUnknown() && e2.valueKnown()) {
-            pw.println("# Generate Test Operator");
+            pw.println("    # Generate Test Operator");
             int dim = ((ArrayList<Object>)e1.getValue()).size();
-            pw.println("t = np.zeros((" + dim + ", " + dim + "))");
+            pw.println("    t = np.zeros((" + dim + ", " + dim + "))");
             if (ctx.binOpP3().getText().equals(">")) {
                 for (int i = 0; i < dim; i++) {
                     if ((int) ((ArrayList<Object>)e1.getValue()).get(i) > (int) e2.getValue()) {
-                        pw.println("t[" + i + ", " + i + "] = 1");
+                        pw.println("    t[" + i + ", " + i + "] = 1");
                     }
                 }
             } else if (ctx.binOpP3().getText().equals(">=")) {
                 for (int i = 0; i < dim; i++) {
                     if ((int) ((ArrayList<Object>)e1.getValue()).get(i) >= (int) e2.getValue()) {
-                        pw.println("t[" + i + ", " + i + "] = 1");
+                        pw.println("    t[" + i + ", " + i + "] = 1");
                     }
                 }
             } else if (ctx.binOpP3().getText().equals("<")) {
                 for (int i = 0; i < dim; i++) {
                     if ((int) ((ArrayList<Object>)e1.getValue()).get(i) < (int) e2.getValue()) {
-                        pw.println("t[" + i + ", " + i + "] = 1");
+                        pw.println("    t[" + i + ", " + i + "] = 1");
                     }
                 }
             } else if (ctx.binOpP3().getText().equals("<=")) {
                 for (int i = 0; i < dim; i++) {
                     if ((int) ((ArrayList<Object>)e1.getValue()).get(i) <= (int) e2.getValue()) {
-                        pw.println("t[" + i + ", " + i + "] = 1");
+                        pw.println("    t[" + i + ", " + i + "] = 1");
                     }
                 }
             }
-            pw.println("testOp = np.array([1.0])");
+            pw.println("    testOp = np.array([1.0])");
             for (int i = 0; i < varList.size(); i++) {
                 if (varList.get(i).equals(ctx.expr(0).getText())) {
-                    pw.println("testOp =  np.kron(testOp, t)");
+                    pw.println("    testOp =  np.kron(testOp, t)");
                 } else {
 
-                    pw.println("testOp =  np.kron(testOp, np.identity(" + varScope.get(varList.get(i)).size() + "))");
+                    pw.println("    testOp =  np.kron(testOp, np.identity(" + varScope.get(varList.get(i)).size() + "))");
                 }
             }
             TOCounter++;
-            pw.println("testTemp" + TOCounter + " = testOp");
-            pw.println("testOp" + TOCounter + " = tf.Variable(testOp)");
+            pw.println("    testTemp" + TOCounter + " = testOp");
+            pw.println("    testOp" + TOCounter + " = tf.Variable(testOp)");
             /*
             int totaldim = 1;
             for (String varname : varList) {
                 totaldim = totaldim * varScope.get(varname).size();
             }
             */
-            pw.println("testNOp" + TOCounter + " = tf.Variable(np.identity(" + totaldim + ") - testOp)");
+            pw.println("    testNOp" + TOCounter + " = tf.Variable(np.identity(" + totaldim + ") - testOp)");
             pw.println();
 
             //result.setValue(OpCounter);
         } else if (e1.valueKnown() && e2.valueUnknown()) {
-            pw.println("# Generate Test Operator");
+            pw.println("    # Generate Test Operator");
             int dim = ((ArrayList<Object>)e2.getValue()).size();
-            pw.println("t = np.zeros((" + dim + ", " + dim + "))");
+            pw.println("    t = np.zeros((" + dim + ", " + dim + "))");
             if (ctx.binOpP3().getText().equals(">")) {
                 for (int i = 0; i < dim; i++) {
                     if ((int) ((ArrayList<Object>)e2.getValue()).get(i) < (int) e1.getValue()) {
-                        pw.println("t[" + i + ", " + i + "] = 1");
+                        pw.println("    t[" + i + ", " + i + "] = 1");
                     }
                 }
             } else if (ctx.binOpP3().getText().equals(">=")) {
                 for (int i = 0; i < dim; i++) {
                     if ((int) ((ArrayList<Object>)e2.getValue()).get(i) <= (int) e1.getValue()) {
-                        pw.println("t[" + i + ", " + i + "] = 1");
+                        pw.println("    t[" + i + ", " + i + "] = 1");
                     }
                 }
             } else if (ctx.binOpP3().getText().equals("<")) {
                 for (int i = 0; i < dim; i++) {
                     if ((int) ((ArrayList<Object>)e2.getValue()).get(i) > (int) e1.getValue()) {
-                        pw.println("t[" + i + ", " + i + "] = 1");
+                        pw.println("    t[" + i + ", " + i + "] = 1");
                     }
                 }
             } else if (ctx.binOpP3().getText().equals("<=")) {
                 for (int i = 0; i < dim; i++) {
                     if ((int) ((ArrayList<Object>)e2.getValue()).get(i) >= (int) e1.getValue()) {
-                        pw.println("t[" + i + ", " + i + "] = 1");
+                        pw.println("    t[" + i + ", " + i + "] = 1");
                     }
                 }
             }
-            pw.println("testOp = np.array([1.0])");
+            pw.println("    testOp = np.array([1.0])");
             for (int i = 0; i < varList.size(); i++) {
                 if (varList.get(i).equals(ctx.expr(1).getText())) {
-                    pw.println("testOp =  np.kron(testOp, t)");
+                    pw.println("    testOp =  np.kron(testOp, t)");
                 } else {
 
-                    pw.println("testOp =  np.kron(testOp, np.identity(" + varScope.get(varList.get(i)).size() + "))");
+                    pw.println("    testOp =  np.kron(testOp, np.identity(" + varScope.get(varList.get(i)).size() + "))");
                 }
             }
             TOCounter++;
-            pw.println("testTemp" + TOCounter + " = testOp");
-            pw.println("testOp" + TOCounter + " = tf.Variable(testOp)");
+            pw.println("    testTemp" + TOCounter + " = testOp");
+            pw.println("    testOp" + TOCounter + " = tf.Variable(testOp)");
             /*
             int totaldim = 1;
             for (String varname : varList) {
                 totaldim = totaldim * varScope.get(varname).size();
             }
             */
-            pw.println("testNOp" + TOCounter + " = tf.Variable(np.identity(" + totaldim + ") - testOp)");
+            pw.println("    testNOp" + TOCounter + " = tf.Variable(np.identity(" + totaldim + ") - testOp)");
             pw.println();
         } else if (e1.valueUnknown() && e2.valueUnknown()) {
-            pw.println("# Generate Test Operator");
+            pw.println("    # Generate Test Operator");
             int dim1 = ((ArrayList<Object>) e1.getValue()).size();
             int dim2 = ((ArrayList<Object>) e2.getValue()).size();
-            pw.println("testOp = np.zeros((" + totaldim + ", " + totaldim + "))");
+            pw.println("    testOp = np.zeros((" + totaldim + ", " + totaldim + "))");
 
             if (ctx.binOpP3().getText().equals(">")) {
                 for (int i = 0; i < dim1; i++) {
                     for (int j = 0; j < dim2; j++) {
                         if (((int) ((ArrayList<Object>) e1.getValue()).get(i)) > ((int) ((ArrayList<Object>) e2.getValue()).get(j))) {
-                            pw.println("t1 = np.zeros((" + dim1 + ", " + dim1 + "))");
-                            pw.println("t2 = np.zeros((" + dim2 + ", " + dim2 + "))");
-                            pw.println("t1[" + i + ", " + i + "] = 1");
-                            pw.println("t2[" + j + ", " + j + "] = 1");
-                            pw.println("t = np.array([1.0])");
+                            pw.println("    t1 = np.zeros((" + dim1 + ", " + dim1 + "))");
+                            pw.println("    t2 = np.zeros((" + dim2 + ", " + dim2 + "))");
+                            pw.println("    t1[" + i + ", " + i + "] = 1");
+                            pw.println("    t2[" + j + ", " + j + "] = 1");
+                            pw.println("    t = np.array([1.0])");
                             for (int k = 0; k < varList.size(); k++) {
                                 if (varList.get(k).equals(ctx.expr(0).getText())) {
-                                    pw.println("t = np.kron(t, t1)");
+                                    pw.println("    t = np.kron(t, t1)");
                                 } else if (varList.get(k).equals(ctx.expr(1).getText())) {
-                                    pw.println("t = np.kron(t, t2)");
+                                    pw.println("    t = np.kron(t, t2)");
                                 } else {
-                                    pw.println("t = np.kron(t, np.identity(" + varScope.get(varList.get(k)).size() + "))");
+                                    pw.println("    t = np.kron(t, np.identity(" + varScope.get(varList.get(k)).size() + "))");
                                 }
                             }
-                            pw.println("testOp = testOp + t");
+                            pw.println("    testOp = testOp + t");
                         }
 
                     }
@@ -604,21 +608,21 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
                 for (int i = 0; i < dim1; i++) {
                     for (int j = 0; j < dim2; j++) {
                         if (((int) ((ArrayList<Object>) e1.getValue()).get(i)) >= ((int) ((ArrayList<Object>) e2.getValue()).get(j))) {
-                            pw.println("t1 = np.zeros((" + dim1 + ", " + dim1 + "))");
-                            pw.println("t2 = np.zeros((" + dim2 + ", " + dim2 + "))");
-                            pw.println("t1[" + i + ", " + i + "] = 1");
-                            pw.println("t2[" + j + ", " + j + "] = 1");
-                            pw.println("t = np.array([1.0])");
+                            pw.println("    t1 = np.zeros((" + dim1 + ", " + dim1 + "))");
+                            pw.println("    t2 = np.zeros((" + dim2 + ", " + dim2 + "))");
+                            pw.println("    t1[" + i + ", " + i + "] = 1");
+                            pw.println("    t2[" + j + ", " + j + "] = 1");
+                            pw.println("    t = np.array([1.0])");
                             for (int k = 0; k < varList.size(); k++) {
                                 if (varList.get(k).equals(ctx.expr(0).getText())) {
-                                    pw.println("t = np.kron(t, t1)");
+                                    pw.println("    t = np.kron(t, t1)");
                                 } else if (varList.get(k).equals(ctx.expr(1).getText())) {
-                                    pw.println("t = np.kron(t, t2)");
+                                    pw.println("    t = np.kron(t, t2)");
                                 } else {
-                                    pw.println("t = np.kron(t, np.identity(" + varScope.get(varList.get(k)).size() + "))");
+                                    pw.println("    t = np.kron(t, np.identity(" + varScope.get(varList.get(k)).size() + "))");
                                 }
                             }
-                            pw.println("testOp = testOp + t");
+                            pw.println("    testOp = testOp + t");
                         }
 
                     }
@@ -628,21 +632,21 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
                 for (int i = 0; i < dim1; i++) {
                     for (int j = 0; j < dim2; j++) {
                         if (((int) ((ArrayList<Object>) e1.getValue()).get(i)) < ((int) ((ArrayList<Object>) e2.getValue()).get(j))) {
-                            pw.println("t1 = np.zeros((" + dim1 + ", " + dim1 + "))");
-                            pw.println("t2 = np.zeros((" + dim2 + ", " + dim2 + "))");
-                            pw.println("t1[" + i + ", " + i + "] = 1");
-                            pw.println("t2[" + j + ", " + j + "] = 1");
-                            pw.println("t = np.array([1.0])");
+                            pw.println("    t1 = np.zeros((" + dim1 + ", " + dim1 + "))");
+                            pw.println("    t2 = np.zeros((" + dim2 + ", " + dim2 + "))");
+                            pw.println("    t1[" + i + ", " + i + "] = 1");
+                            pw.println("    t2[" + j + ", " + j + "] = 1");
+                            pw.println("    t = np.array([1.0])");
                             for (int k = 0; k < varList.size(); k++) {
                                 if (varList.get(k).equals(ctx.expr(0).getText())) {
-                                    pw.println("t = np.kron(t, t1)");
+                                    pw.println("    t = np.kron(t, t1)");
                                 } else if (varList.get(k).equals(ctx.expr(1).getText())) {
-                                    pw.println("t = np.kron(t, t2)");
+                                    pw.println("    t = np.kron(t, t2)");
                                 } else {
-                                    pw.println("t = np.kron(t, np.identity(" + varScope.get(varList.get(k)).size() + "))");
+                                    pw.println("    t = np.kron(t, np.identity(" + varScope.get(varList.get(k)).size() + "))");
                                 }
                             }
-                            pw.println("testOp = testOp + t");
+                            pw.println("    testOp = testOp + t");
                         }
 
                     }
@@ -652,21 +656,21 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
                 for (int i = 0; i < dim1; i++) {
                     for (int j = 0; j < dim2; j++) {
                         if (((int) ((ArrayList<Object>) e1.getValue()).get(i)) <= ((int) ((ArrayList<Object>) e2.getValue()).get(j))) {
-                            pw.println("t1 = np.zeros((" + dim1 + ", " + dim1 + "))");
-                            pw.println("t2 = np.zeros((" + dim2 + ", " + dim2 + "))");
-                            pw.println("t1[" + i + ", " + i + "] = 1");
-                            pw.println("t2[" + j + ", " + j + "] = 1");
-                            pw.println("t = np.array([1.0])");
+                            pw.println("    t1 = np.zeros((" + dim1 + ", " + dim1 + "))");
+                            pw.println("    t2 = np.zeros((" + dim2 + ", " + dim2 + "))");
+                            pw.println("    t1[" + i + ", " + i + "] = 1");
+                            pw.println("    t2[" + j + ", " + j + "] = 1");
+                            pw.println("    t = np.array([1.0])");
                             for (int k = 0; k < varList.size(); k++) {
                                 if (varList.get(k).equals(ctx.expr(0).getText())) {
-                                    pw.println("t = np.kron(t, t1)");
+                                    pw.println("    t = np.kron(t, t1)");
                                 } else if (varList.get(k).equals(ctx.expr(1).getText())) {
-                                    pw.println("t = np.kron(t, t2)");
+                                    pw.println("    t = np.kron(t, t2)");
                                 } else {
-                                    pw.println("t = np.kron(t, np.identity(" + varScope.get(varList.get(k)).size() + "))");
+                                    pw.println("    t = np.kron(t, np.identity(" + varScope.get(varList.get(k)).size() + "))");
                                 }
                             }
-                            pw.println("testOp = testOp + t");
+                            pw.println("    testOp = testOp + t");
                         }
 
                     }
@@ -674,10 +678,10 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
                 }
             }
             TOCounter++;
-            pw.println("testTemp" + TOCounter + " = testOp");
-            pw.println("testOp" + TOCounter + " = tf.Variable(testOp)");
+            pw.println("    testTemp" + TOCounter + " = testOp");
+            pw.println("    testOp" + TOCounter + " = tf.Variable(testOp)");
 
-            pw.println("testNOp" + TOCounter + " = tf.Variable(np.identity(" + totaldim + ") - testOp)");
+            pw.println("    testNOp" + TOCounter + " = tf.Variable(np.identity(" + totaldim + ") - testOp)");
             pw.println();
 
         }
@@ -717,108 +721,108 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
             //do nothing
         } else*/
         if (e1.valueUnknown() && e2.valueKnown()) {
-            pw.println("# Generate Test Operator");
+            pw.println("    # Generate Test Operator");
             int dim = ((ArrayList<Object>)e1.getValue()).size();
-            pw.println("t = np.zeros((" + dim + ", " + dim + "))");
+            pw.println("    t = np.zeros((" + dim + ", " + dim + "))");
             if (ctx.binOpP4().getText().equals("==")) {
                 for (int i = 0; i < dim; i++) {
                     if (((ArrayList<Object>)e1.getValue()).get(i).equals(e2.getValue())) {
-                        pw.println("t[" + i + ", " + i + "] = 1");
+                        pw.println("    t[" + i + ", " + i + "] = 1");
                     }
                 }
             } else if (ctx.binOpP4().getText().equals("!=")) {
                 for (int i = 0; i < dim; i++) {
                     if (!((ArrayList<Object>)e1.getValue()).get(i).equals(e2.getValue())) {
-                        pw.println("t[" + i + ", " + i + "] = 1");
+                        pw.println("    t[" + i + ", " + i + "] = 1");
                     }
                 }
             }
-            pw.println("testOp = np.array([1.0])");
+            pw.println("    testOp = np.array([1.0])");
             for (int i = 0; i < varList.size(); i++) {
                 if (varList.get(i).equals(ctx.expr(0).getText())) {
-                    pw.println("testOp =  np.kron(testOp, t)");
+                    pw.println("    testOp =  np.kron(testOp, t)");
 
                 } else {
-                    pw.println("testOp =  np.kron(testOp, np.identity(" + varScope.get(varList.get(i)).size() + "))");
+                    pw.println("    testOp =  np.kron(testOp, np.identity(" + varScope.get(varList.get(i)).size() + "))");
                 }
             }
             TOCounter++;
-            pw.println("testTemp" + TOCounter + " = testOp");
-            pw.println("testOp" + TOCounter + " = tf.Variable(testOp)");
+            pw.println("    testTemp" + TOCounter + " = testOp");
+            pw.println("    testOp" + TOCounter + " = tf.Variable(testOp)");
             /*
             int totaldim = 1;
             for (String varname : varList) {
                 totaldim = totaldim * varScope.get(varname).size();
             }
             */
-            pw.println("testNOp" + TOCounter + " = tf.Variable(np.identity(" + totaldim + ") - testOp)");
+            pw.println("    testNOp" + TOCounter + " = tf.Variable(np.identity(" + totaldim + ") - testOp)");
 
             pw.println();
             //result.setValue(OpCounter);
         } else  if (e1.valueKnown() && e2.valueUnknown()) {
-            pw.println("# Generate Test Operator");
+            pw.println("    # Generate Test Operator");
             int dim = ((ArrayList<Object>)e2.getValue()).size();
-            pw.println("t = np.zeros((" + dim + ", " + dim + "))");
+            pw.println("    t = np.zeros((" + dim + ", " + dim + "))");
             if (ctx.binOpP4().getText().equals("==")) {
                 for (int i = 0; i < dim; i++) {
                     if (((ArrayList<Object>)e2.getValue()).get(i).equals(e1.getValue())) {
-                        pw.println("t[" + i + ", " + i + "] = 1");
+                        pw.println("    t[" + i + ", " + i + "] = 1");
                     }
                 }
             } else if (ctx.binOpP4().getText().equals("!=")) {
                 for (int i = 0; i < dim; i++) {
                     if (!((ArrayList<Object>)e2.getValue()).get(i).equals(e1.getValue())) {
-                        pw.println("t[" + i + ", " + i + "] = 1");
+                        pw.println("    t[" + i + ", " + i + "] = 1");
                     }
                 }
             }
-            pw.println("testOp = np.array([1.0])");
+            pw.println("    testOp = np.array([1.0])");
             for (int i = 0; i < varList.size(); i++) {
                 if (varList.get(i).equals(ctx.expr(1).getText())) {
-                    pw.println("testOp =  np.kron(testOp, t)");
+                    pw.println("    testOp =  np.kron(testOp, t)");
 
                 } else {
-                    pw.println("testOp =  np.kron(testOp, np.identity(" + varScope.get(varList.get(i)).size() + "))");
+                    pw.println("    testOp =  np.kron(testOp, np.identity(" + varScope.get(varList.get(i)).size() + "))");
                 }
             }
             TOCounter++;
-            pw.println("testTemp" + TOCounter + " = testOp");
-            pw.println("testOp" + TOCounter + " = tf.Variable(testOp)");
+            pw.println("    testTemp" + TOCounter + " = testOp");
+            pw.println("    testOp" + TOCounter + " = tf.Variable(testOp)");
             /*
             int totaldim = 1;
             for (String varname : varList) {
                 totaldim = totaldim * varScope.get(varname).size();
             }
             */
-            pw.println("testNOp" + TOCounter + " = tf.Variable(np.identity(" + totaldim + ") - testOp)");
+            pw.println("    testNOp" + TOCounter + " = tf.Variable(np.identity(" + totaldim + ") - testOp)");
 
             pw.println();
             //result.setValue(OpCounter);
         } else if (e1.valueUnknown() && e2.valueUnknown()) {
-            pw.println("# Generate Test Operator");
+            pw.println("    # Generate Test Operator");
             int dim1 = ((ArrayList<Object>)e1.getValue()).size();
             int dim2 = ((ArrayList<Object>)e2.getValue()).size();
-            pw.println("testOp = np.zeros((" + totaldim + ", " + totaldim + "))");
+            pw.println("    testOp = np.zeros((" + totaldim + ", " + totaldim + "))");
 
             if (ctx.binOpP4().getText().equals("==")) {
                 for (int i = 0; i < dim1; i++) {
                     for (int j = 0; j < dim2; j++) {
                         if (((ArrayList<Object>)e1.getValue()).get(i).equals(((ArrayList<Object>)e2.getValue()).get(j))) {
-                            pw.println("t1 = np.zeros((" + dim1 + ", " + dim1 + "))");
-                            pw.println("t2 = np.zeros((" + dim2 + ", " + dim2 + "))");
-                            pw.println("t1[" + i + ", " + i + "] = 1");
-                            pw.println("t2[" + j + ", " + j + "] = 1");
-                            pw.println("t = np.array([1.0])");
+                            pw.println("    t1 = np.zeros((" + dim1 + ", " + dim1 + "))");
+                            pw.println("    t2 = np.zeros((" + dim2 + ", " + dim2 + "))");
+                            pw.println("    t1[" + i + ", " + i + "] = 1");
+                            pw.println("    t2[" + j + ", " + j + "] = 1");
+                            pw.println("    t = np.array([1.0])");
                             for (int k = 0; k < varList.size(); k++) {
                                 if (varList.get(k).equals(ctx.expr(0).getText())) {
-                                    pw.println("t = np.kron(t, t1)");
+                                    pw.println("    t = np.kron(t, t1)");
                                 } else if (varList.get(k).equals(ctx.expr(1).getText())) {
-                                    pw.println("t = np.kron(t, t2)");
+                                    pw.println("    t = np.kron(t, t2)");
                                 } else {
-                                    pw.println("t = np.kron(t, np.identity(" + varScope.get(varList.get(k)).size() + "))");
+                                    pw.println("    t = np.kron(t, np.identity(" + varScope.get(varList.get(k)).size() + "))");
                                 }
                             }
-                            pw.println("testOp = testOp + t");
+                            pw.println("    testOp = testOp + t");
                         }
 
                     }
@@ -828,21 +832,21 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
                 for (int i = 0; i < dim1; i++) {
                     for (int j = 0; j < dim2; j++) {
                         if (!((ArrayList<Object>)e1.getValue()).get(i).equals(((ArrayList<Object>)e2.getValue()).get(j))) {
-                            pw.println("t1 = np.zeros((" + dim1 + ", " + dim1 + "))");
-                            pw.println("t2 = np.zeros((" + dim2 + ", " + dim2 + "))");
-                            pw.println("t1[" + i + ", " + i + "] = 1");
-                            pw.println("t2[" + j + ", " + j + "] = 1");
-                            pw.println("t = np.array([1.0])");
+                            pw.println("    t1 = np.zeros((" + dim1 + ", " + dim1 + "))");
+                            pw.println("    t2 = np.zeros((" + dim2 + ", " + dim2 + "))");
+                            pw.println("    t1[" + i + ", " + i + "] = 1");
+                            pw.println("    t2[" + j + ", " + j + "] = 1");
+                            pw.println("    t = np.array([1.0])");
                             for (int k = 0; k < varList.size(); k++) {
                                 if (varList.get(k).equals(ctx.expr(0).getText())) {
-                                    pw.println("t = np.kron(t, t1)");
+                                    pw.println("    t = np.kron(t, t1)");
                                 } else if (varList.get(k).equals(ctx.expr(1).getText())) {
-                                    pw.println("t = np.kron(t, t2)");
+                                    pw.println("    t = np.kron(t, t2)");
                                 } else {
-                                    pw.println("t = np.kron(t, np.identity(" + varScope.get(varList.get(k)).size() + "))");
+                                    pw.println("    t = np.kron(t, np.identity(" + varScope.get(varList.get(k)).size() + "))");
                                 }
                             }
-                            pw.println("testOp = testOp + t");
+                            pw.println("    testOp = testOp + t");
                         }
 
                     }
@@ -851,10 +855,10 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
 
             }
             TOCounter++;
-            pw.println("testTemp" + TOCounter + " = testOp");
-            pw.println("testOp" + TOCounter + " = tf.Variable(testOp)");
+            pw.println("    testTemp" + TOCounter + " = testOp");
+            pw.println("    testOp" + TOCounter + " = tf.Variable(testOp)");
 
-            pw.println("testNOp" + TOCounter + " = tf.Variable(np.identity(" + totaldim + ") - testOp)");
+            pw.println("    testNOp" + TOCounter + " = tf.Variable(np.identity(" + totaldim + ") - testOp)");
             pw.println();
 
         }
@@ -876,17 +880,17 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
 
         TOCounter++;
 
-        pw.println("# Generate Test Operator");
-        pw.println("testOp = np.dot(testTemp" + count1.getValue() + ", testTemp" + count2.getValue() + ")");
-        pw.println("testTemp" + TOCounter + " = testOp");
-        pw.println("testOp" + TOCounter + " = tf.Variable(testOp)");
+        pw.println("    # Generate Test Operator");
+        pw.println("    testOp = np.dot(testTemp" + count1.getValue() + ", testTemp" + count2.getValue() + ")");
+        pw.println("    testTemp" + TOCounter + " = testOp");
+        pw.println("    testOp" + TOCounter + " = tf.Variable(testOp)");
         /*
         int totaldim = 1;
         for (String varname : varList) {
             totaldim = totaldim * varScope.get(varname).size();
         }
         */
-        pw.println("testNOp" + TOCounter + " = tf.Variable(np.identity(" + totaldim + ") - testOp)");
+        pw.println("    testNOp" + TOCounter + " = tf.Variable(np.identity(" + totaldim + ") - testOp)");
         pw.println();
 
         /*
@@ -923,14 +927,14 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
         }
         */
 
-        pw.println("# Generate Test Operator");
-        pw.println("testOp = np.zeros((" + totaldim + ", " + totaldim + "))");
-        pw.println("for i in range(" + totaldim + "):");
-        pw.println("    if testTemp" + count1.getValue() + "[i, i] == 1 or testTemp" + count2.getValue() + "[i, i] == 1:");
-        pw.println("        testOp[i, i] = 1");
-        pw.println("testTemp" + TOCounter + " = testOp");
-        pw.println("testOp" + TOCounter + " = tf.Variable(testOp)");
-        pw.println("testNOp" + TOCounter + " = tf.Variable(np.identity(" + totaldim + ") - testOp)");
+        pw.println("    # Generate Test Operator");
+        pw.println("    testOp = np.zeros((" + totaldim + ", " + totaldim + "))");
+        pw.println("    for i in range(" + totaldim + "):");
+        pw.println("        if testTemp" + count1.getValue() + "[i, i] == 1 or testTemp" + count2.getValue() + "[i, i] == 1:");
+        pw.println("            testOp[i, i] = 1");
+        pw.println("    testTemp" + TOCounter + " = testOp");
+        pw.println("    testOp" + TOCounter + " = tf.Variable(testOp)");
+        pw.println("    testNOp" + TOCounter + " = tf.Variable(np.identity(" + totaldim + ") - testOp)");
         pw.println();
 
         /*
@@ -1026,14 +1030,14 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
 
         scopeCode.get(currentScope).add("    sigma = tf.cond(condition" + testOpCount + "(sigma), lambda: then" + testOpCount + "(sigma), lambda: else" + testOpCount + "(sigma))");
 */
-        scopeCode.get(currentScope).add("    sigma" + testOpCount + "_ogn = sigma");
-        scopeCode.get(currentScope).add("    sigma = tf.matmul(sigma, testOp" + testOpCount + ")");
+        scopeCode.get(currentScope).add("        sigma" + testOpCount + "_ogn = sigma");
+        scopeCode.get(currentScope).add("        sigma = tf.matmul(sigma, testOp" + testOpCount + ")");
         visit(ctx.stat(0));
-        scopeCode.get(currentScope).add("    sigma" + testOpCount + "_then = sigma");
-        scopeCode.get(currentScope).add("    sigma = tf.matmul(sigma" + testOpCount + "_ogn, testNOp" + testOpCount + ")");
+        scopeCode.get(currentScope).add("        sigma" + testOpCount + "_then = sigma");
+        scopeCode.get(currentScope).add("        sigma = tf.matmul(sigma" + testOpCount + "_ogn, testNOp" + testOpCount + ")");
         visit(ctx.stat(1));
-        scopeCode.get(currentScope).add("    sigma" + testOpCount + "_else = sigma");
-        scopeCode.get(currentScope).add("    sigma = tf.add(sigma" + testOpCount + "_then, sigma" + testOpCount + "_else)");
+        scopeCode.get(currentScope).add("        sigma" + testOpCount + "_else = sigma");
+        scopeCode.get(currentScope).add("        sigma = tf.add(sigma" + testOpCount + "_then, sigma" + testOpCount + "_else)");
 
         return null;
     }
@@ -1051,28 +1055,28 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
 
             visit(ctx.stat());
 
-            pw.println("# Define WHILE Statement");
-            pw.println("def condition" + testOpCount + "(sigma):");
-            pw.println("    sigma = tf.matmul(sigma, testOp" + testOpCount + ")");
+            pw.println("    # Define WHILE Statement");
+            pw.println("    def condition" + testOpCount + "(sigma):");
+            pw.println("        sigma = tf.matmul(sigma, testOp" + testOpCount + ")");
 
-            pw.println("    return tf.logical_not(tf.reduce_all(tf.equal(sigma, tf.zeros([" + totaldim + "], dtype=tf.float64))))");
+            pw.println("        return tf.logical_not(tf.reduce_all(tf.equal(sigma, tf.zeros([" + totaldim + "], dtype=tf.float64))))");
 
-            pw.println("def body" + testOpCount + "(sigma):");
-            pw.println("    outOfLoop = tf.matmul(sigma, testNOp" + testOpCount + ")");
-            pw.println("    sigma = tf.matmul(sigma, " + "testOp" + testOpCount + ")");
+            pw.println("    def body" + testOpCount + "(sigma):");
+            pw.println("        outOfLoop = tf.matmul(sigma, testNOp" + testOpCount + ")");
+            pw.println("        sigma = tf.matmul(sigma, " + "testOp" + testOpCount + ")");
             // whilecode
             for (String code : scopeCode.get(currentScope)) {
                 pw.println(code);
             }
             scopeCode.get(currentScope).clear();
 
-            pw.println("    sigma = tf.add(sigma, outOfLoop)");
-            pw.println("    return sigma");
+            pw.println("        sigma = tf.add(sigma, outOfLoop)");
+            pw.println("        return sigma");
             pw.println();
 
             currentScope--;
 
-            scopeCode.get(currentScope).add("    sigma = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma])");
+            scopeCode.get(currentScope).add("        sigma = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma])");
 
         } else if (!ctx.expr().getText().equals("true") && ctx.INTEGER() != null && ctx.pr() == null) {
 
@@ -1086,31 +1090,31 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
 
             visit(ctx.stat());
 
-            pw.println("# Define WHILE Statement");
-            pw.println("loopCount" + testOpCount + " = tf.Variable(0)");
-            pw.println("def condition" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
-            pw.println("    sigma = tf.matmul(sigma, testOp" + testOpCount + ")");
+            pw.println("    # Define WHILE Statement");
+            pw.println("    loopCount" + testOpCount + " = tf.Variable(0)");
+            pw.println("    def condition" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
+            pw.println("        sigma = tf.matmul(sigma, testOp" + testOpCount + ")");
 
-            pw.println("    return tf.logical_and(tf.logical_not(tf.reduce_all(tf.equal(sigma, tf.zeros([" + totaldim + "], " +
+            pw.println("        return tf.logical_and(tf.logical_not(tf.reduce_all(tf.equal(sigma, tf.zeros([" + totaldim + "], " +
                     "dtype=tf.float64)))), tf.less(loopCount" + testOpCount + ", tf.constant(" + limit + ")))");
 
-            pw.println("def body" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
-            pw.println("    loopCount" + testOpCount + " = tf.add(loopCount" + testOpCount + ", tf.constant(1))");
-            pw.println("    outOfLoop = tf.matmul(sigma, testNOp" + testOpCount + ")");
-            pw.println("    sigma = tf.matmul(sigma, " + "testOp" + testOpCount + ")");
+            pw.println("    def body" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
+            pw.println("        loopCount" + testOpCount + " = tf.add(loopCount" + testOpCount + ", tf.constant(1))");
+            pw.println("        outOfLoop = tf.matmul(sigma, testNOp" + testOpCount + ")");
+            pw.println("        sigma = tf.matmul(sigma, " + "testOp" + testOpCount + ")");
             // whilecode
             for (String code : scopeCode.get(currentScope)) {
                 pw.println(code);
             }
             scopeCode.get(currentScope).clear();
 
-            pw.println("    sigma = tf.add(sigma, outOfLoop)");
-            pw.println("    return sigma, loopCount" + testOpCount);
+            pw.println("        sigma = tf.add(sigma, outOfLoop)");
+            pw.println("        return sigma, loopCount" + testOpCount);
             pw.println();
 
             currentScope--;
 
-            scopeCode.get(currentScope).add("    sigma, loopCount" + testOpCount + " = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma, loopCount" + testOpCount + "])");
+            scopeCode.get(currentScope).add("        sigma, loopCount" + testOpCount + " = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma, loopCount" + testOpCount + "])");
 
         } else if (!ctx.expr().getText().equals("true") && ctx.INTEGER() == null && ctx.pr() != null) {
 
@@ -1126,30 +1130,30 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
             visit(ctx.stat());
 
 
-            pw.println("# Define WHILE Statement");
-            pw.println("epsilon" + testOpCount + " = tf.Variable(" + epsilon + ", dtype=tf.float64)");
-            pw.println("def condition" + testOpCount + "(sigma):");
-            pw.println("    remain = tf.reduce_sum(sigma)");
-            pw.println("    sigma = tf.matmul(sigma, testOp" + testOpCount + ")");
+            pw.println("    # Define WHILE Statement");
+            pw.println("    epsilon" + testOpCount + " = tf.Variable(" + epsilon + ", dtype=tf.float64)");
+            pw.println("    def condition" + testOpCount + "(sigma):");
+            pw.println("        remain = tf.reduce_sum(sigma)");
+            pw.println("        sigma = tf.matmul(sigma, testOp" + testOpCount + ")");
 
-            pw.println("    return tf.logical_and(tf.logical_not(tf.reduce_all(tf.equal(sigma, tf.zeros([" + totaldim + "], dtype=tf.float64)))), tf.greater(remain, epsilon" + testOpCount + "))");
+            pw.println("        return tf.logical_and(tf.logical_not(tf.reduce_all(tf.equal(sigma, tf.zeros([" + totaldim + "], dtype=tf.float64)))), tf.greater(remain, epsilon" + testOpCount + "))");
 
-            pw.println("def body" + testOpCount + "(sigma):");
-            pw.println("    outOfLoop = tf.matmul(sigma, testNOp" + testOpCount + ")");
-            pw.println("    sigma = tf.matmul(sigma, " + "testOp" + testOpCount + ")");
+            pw.println("    def body" + testOpCount + "(sigma):");
+            pw.println("        outOfLoop = tf.matmul(sigma, testNOp" + testOpCount + ")");
+            pw.println("        sigma = tf.matmul(sigma, " + "testOp" + testOpCount + ")");
             // whilecode
             for (String code : scopeCode.get(currentScope)) {
                 pw.println(code);
             }
             scopeCode.get(currentScope).clear();
 
-            pw.println("    sigma = tf.add(sigma, outOfLoop)");
-            pw.println("    return sigma");
+            pw.println("        sigma = tf.add(sigma, outOfLoop)");
+            pw.println("        return sigma");
             pw.println();
 
             currentScope--;
 
-            scopeCode.get(currentScope).add("    sigma = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma])");
+            scopeCode.get(currentScope).add("        sigma = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma])");
 
         } else if (!ctx.expr().getText().equals("true") && ctx.INTEGER() != null && ctx.pr() != null) {
             int limit = Integer.parseInt(ctx.INTEGER().getText());
@@ -1164,33 +1168,33 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
 
             visit(ctx.stat());
 
-            pw.println("# Define WHILE Statement");
-            pw.println("epsilon" + testOpCount + " = tf.Variable(" + epsilon + ", dtype=tf.float64)");
-            pw.println("loopCount" + testOpCount + " = tf.Variable(0)");
-            pw.println("def condition" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
-            pw.println("    remain = tf.reduce_sum(sigma)");
-            pw.println("    sigma = tf.matmul(sigma, testOp" + testOpCount + ")");
+            pw.println("    # Define WHILE Statement");
+            pw.println("    epsilon" + testOpCount + " = tf.Variable(" + epsilon + ", dtype=tf.float64)");
+            pw.println("    loopCount" + testOpCount + " = tf.Variable(0)");
+            pw.println("    def condition" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
+            pw.println("        remain = tf.reduce_sum(sigma)");
+            pw.println("        sigma = tf.matmul(sigma, testOp" + testOpCount + ")");
 
-            pw.println("    return tf.logical_and(tf.logical_and(tf.logical_not(tf.reduce_all(tf.equal(sigma, tf.zeros([" + totaldim + "], " +
+            pw.println("        return tf.logical_and(tf.logical_and(tf.logical_not(tf.reduce_all(tf.equal(sigma, tf.zeros([" + totaldim + "], " +
                     "dtype=tf.float64)))), tf.less(loopCount" + testOpCount + ", tf.constant(" + limit + "))), tf.greater(remain, epsilon" + testOpCount + "))");
 
-            pw.println("def body" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
-            pw.println("    loopCount" + testOpCount + " = tf.add(loopCount" + testOpCount + ", tf.constant(1))");
-            pw.println("    outOfLoop = tf.matmul(sigma, testNOp" + testOpCount + ")");
-            pw.println("    sigma = tf.matmul(sigma, " + "testOp" + testOpCount + ")");
+            pw.println("    def body" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
+            pw.println("        loopCount" + testOpCount + " = tf.add(loopCount" + testOpCount + ", tf.constant(1))");
+            pw.println("        outOfLoop = tf.matmul(sigma, testNOp" + testOpCount + ")");
+            pw.println("        sigma = tf.matmul(sigma, " + "testOp" + testOpCount + ")");
             // whilecode
             for (String code : scopeCode.get(currentScope)) {
                 pw.println(code);
             }
             scopeCode.get(currentScope).clear();
 
-            pw.println("    sigma = tf.add(sigma, outOfLoop)");
-            pw.println("    return sigma, loopCount" + testOpCount);
+            pw.println("        sigma = tf.add(sigma, outOfLoop)");
+            pw.println("        return sigma, loopCount" + testOpCount);
             pw.println();
 
             currentScope--;
 
-            scopeCode.get(currentScope).add("    sigma, loopCount" + testOpCount + " = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma, loopCount" + testOpCount + "])");
+            scopeCode.get(currentScope).add("        sigma, loopCount" + testOpCount + " = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma, loopCount" + testOpCount + "])");
 
         } else if (ctx.expr().getText().equals("true") && ctx.INTEGER() == null && ctx.pr() == null){
             // should not have this situation
@@ -1208,26 +1212,26 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
 
             visit(ctx.stat());
 
-            pw.println("# Define WHILE Statement");
-            pw.println("loopCount" + testOpCount + " = tf.Variable(0)");
-            pw.println("def condition" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
+            pw.println("    # Define WHILE Statement");
+            pw.println("    loopCount" + testOpCount + " = tf.Variable(0)");
+            pw.println("    def condition" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
 
-            pw.println("    return tf.less(loopCount" + testOpCount + ", tf.constant(" + limit + "))");
+            pw.println("        return tf.less(loopCount" + testOpCount + ", tf.constant(" + limit + "))");
 
-            pw.println("def body" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
-            pw.println("    loopCount" + testOpCount + " = tf.add(loopCount" + testOpCount + ", tf.constant(1))");
+            pw.println("    def body" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
+            pw.println("        loopCount" + testOpCount + " = tf.add(loopCount" + testOpCount + ", tf.constant(1))");
             // whilecode
             for (String code : scopeCode.get(currentScope)) {
                 pw.println(code);
             }
             scopeCode.get(currentScope).clear();
 
-            pw.println("    return sigma, loopCount" + testOpCount);
+            pw.println("        return sigma, loopCount" + testOpCount);
             pw.println();
 
             currentScope--;
 
-            scopeCode.get(currentScope).add("    sigma, loopCount" + testOpCount + " = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma, loopCount" + testOpCount + "])");
+            scopeCode.get(currentScope).add("        sigma, loopCount" + testOpCount + " = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma, loopCount" + testOpCount + "])");
 
         } else if (ctx.expr().getText().equals("true") && ctx.INTEGER() == null && ctx.pr() != null) {
 
@@ -1242,26 +1246,26 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
             visit(ctx.stat());
 
 
-            pw.println("# Define WHILE Statement");
-            pw.println("epsilon" + testOpCount + " = tf.Variable(" + epsilon + ", dtype=tf.float64)");
-            pw.println("def condition" + testOpCount + "(sigma):");
-            pw.println("    remain = tf.reduce_sum(sigma)");
+            pw.println("    # Define WHILE Statement");
+            pw.println("    epsilon" + testOpCount + " = tf.Variable(" + epsilon + ", dtype=tf.float64)");
+            pw.println("    def condition" + testOpCount + "(sigma):");
+            pw.println("        remain = tf.reduce_sum(sigma)");
 
-            pw.println("    return tf.greater(remain, epsilon" + testOpCount + ")");
+            pw.println("        return tf.greater(remain, epsilon" + testOpCount + ")");
 
-            pw.println("def body" + testOpCount + "(sigma):");
+            pw.println("    def body" + testOpCount + "(sigma):");
             // whilecode
             for (String code : scopeCode.get(currentScope)) {
                 pw.println(code);
             }
             scopeCode.get(currentScope).clear();
 
-            pw.println("    return sigma");
+            pw.println("        return sigma");
             pw.println();
 
             currentScope--;
 
-            scopeCode.get(currentScope).add("    sigma = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma])");
+            scopeCode.get(currentScope).add("        sigma = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma])");
 
         } else if (ctx.expr().getText().equals("true") && ctx.INTEGER() != null && ctx.pr() != null) {
             int limit = Integer.parseInt(ctx.INTEGER().getText());
@@ -1277,28 +1281,28 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
 
             visit(ctx.stat());
 
-            pw.println("# Define WHILE Statement");
-            pw.println("epsilon" + testOpCount + " = tf.Variable(" + epsilon + ", dtype=tf.float64)");
-            pw.println("loopCount" + testOpCount + " = tf.Variable(0)");
-            pw.println("def condition" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
-            pw.println("    remain = tf.reduce_sum(sigma)");
+            pw.println("    # Define WHILE Statement");
+            pw.println("    epsilon" + testOpCount + " = tf.Variable(" + epsilon + ", dtype=tf.float64)");
+            pw.println("    loopCount" + testOpCount + " = tf.Variable(0)");
+            pw.println("    def condition" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
+            pw.println("        remain = tf.reduce_sum(sigma)");
 
-            pw.println("    return tf.logical_and(tf.less(loopCount" + testOpCount + ", tf.constant(" + limit + ")), tf.greater(remain, epsilon" + testOpCount + "))");
+            pw.println("        return tf.logical_and(tf.less(loopCount" + testOpCount + ", tf.constant(" + limit + ")), tf.greater(remain, epsilon" + testOpCount + "))");
 
-            pw.println("def body" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
-            pw.println("    loopCount" + testOpCount + " = tf.add(loopCount" + testOpCount + ", tf.constant(1))");
+            pw.println("    def body" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
+            pw.println("        loopCount" + testOpCount + " = tf.add(loopCount" + testOpCount + ", tf.constant(1))");
             // whilecode
             for (String code : scopeCode.get(currentScope)) {
                 pw.println(code);
             }
             scopeCode.get(currentScope).clear();
 
-            pw.println("    return sigma, loopCount" + testOpCount);
+            pw.println("        return sigma, loopCount" + testOpCount);
             pw.println();
 
             currentScope--;
 
-            scopeCode.get(currentScope).add("    sigma, loopCount" + testOpCount + " = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma, loopCount" + testOpCount + "])");
+            scopeCode.get(currentScope).add("        sigma, loopCount" + testOpCount + " = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma, loopCount" + testOpCount + "])");
 
         }
         return null;
@@ -1321,18 +1325,19 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
         }*/
 
 
-        scopeCode.get(currentScope).add("    sigma" + testOpCount + "_ogn = sigma");
+        scopeCode.get(currentScope).add("        sigma" + testOpCount + "_ogn = sigma");
         visit(ctx.stat(0));
-        scopeCode.get(currentScope).add("    sigma" + testOpCount + "_choose1 = sigma");
+        scopeCode.get(currentScope).add("        sigma" + testOpCount + "_choose1 = sigma");
         for (int i = 1; i < ctx.stat().size(); i++) {
-            scopeCode.get(currentScope).add("    sigma = sigma" + testOpCount + "_ogn");
+            scopeCode.get(currentScope).add("        sigma = sigma" + testOpCount + "_ogn");
             visit(ctx.stat(i));
-            scopeCode.get(currentScope).add("    sigma" + testOpCount + "_choose" + (i+1) + " = sigma");
+            scopeCode.get(currentScope).add("        sigma" + testOpCount + "_choose" + (i+1) + " = sigma");
         }
-        scopeCode.get(currentScope).add("    sigma = tf.matmul(sigma" + testOpCount + "_choose1, tf.constant(" + pr.get(0).getValue() + "*np.identity(" + totaldim + "), dtype=tf.float64))");
+
+        scopeCode.get(currentScope).add("        sigma = tf.matmul(sigma" + testOpCount + "_choose1, tf.constant(" + pr.get(0).getValue() + "*np.identity(" + totaldim + "), dtype=tf.float64))");
 
         for (int i = 1; i < ctx.stat().size(); i++) {
-            scopeCode.get(currentScope).add("    sigma = tf.add(sigma, tf.matmul(sigma" + testOpCount + "_choose" + (i+1) + ", tf.constant(" + pr.get(i).getValue() + "*np.identity(" + totaldim + "), dtype=tf.float64)))");
+            scopeCode.get(currentScope).add("        sigma = tf.add(sigma, tf.matmul(sigma" + testOpCount + "_choose" + (i + 1) + ", tf.constant(" + pr.get(i).getValue() + "*np.identity(" + totaldim + "), dtype=tf.float64)))");
 
         }
 /*
@@ -1385,10 +1390,30 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
     public Value visitDecimal(pWhileParser.DecimalContext ctx) {
         Value result = new Value();
         double pr = (double) Integer.parseInt(ctx.INTEGER().getText()) / (double) Math.pow(10, (ctx.INTEGER().getText().length()));
+        if (ctx.MINUS() != null) {
+            pr = -pr;
+        }
         result.setValue(pr);
         return result;
     }
 
+    @Override
+    public Value visitOneOrZero(pWhileParser.OneOrZeroContext ctx) {
+        Value result = new Value();
+        if (Integer.parseInt(ctx.INTEGER().getText()) >= 1) {
+            result.setValue(1);
+        } else {
+            result.setValue(0);
+        }
+        return result;
+    }
+
+    @Override
+    public Value visitPrVar(pWhileParser.PrVarContext ctx) {
+        Value result = new Value();
+        result.setValue(ctx.IDENT().getText());
+        return result;
+    }
 
     @Override
     public Value visitProg(pWhileParser.ProgContext ctx) {
@@ -1397,20 +1422,42 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
         pw.println("import tensorflow as tf");
         pw.println();
 
+        if (ctx.para() == null) {
+            pw.println("for p in range(1):");
+        } else {
+            paraChoose = true;
+            pw.print("paras = [(");
+            pw.print(ctx.para().IDENT(0));
+            for (int i = 1; i < ctx.para().IDENT().size(); i++) {
+                pw.print(", " + ctx.para().IDENT(i));
+            }
+            pw.print(") ");
+            for (int i = 0; i < ctx.para().IDENT().size(); i++) {
+                pw.print("for " + ctx.para().IDENT(i).getText() + " in linspace(" + ctx.para().pr(i*3).getText() + ", " + ctx.para().pr(i*3 + 1).getText() + ", " + ctx.para().pr(i*3 + 2).getText() + ") ");
+            }
+            pw.println("]");
+            pw.print("for (");
+            pw.print(ctx.para().IDENT(0));
+            for (int i = 1; i < ctx.para().IDENT().size(); i++) {
+                pw.print(", " + ctx.para().IDENT(i));
+            }
+            pw.println(") in paras:");
+        }
+
         scopeCode.add(new ArrayList<String>());
 
         visit(ctx.stat(0));
 
         visit(ctx.stat(1));
 
-        pw.println("# Main Program");
-        pw.println("with tf.Session() as sess:\n    sess.run(tf.global_variables_initializer())");
+        pw.println("    # Main Program");
+        pw.println("    with tf.Session() as sess:\n    sess.run(tf.global_variables_initializer())");
 
         for (String code : scopeCode.get(0)) {
             pw.println(code);
         }
 
-        pw.println("    print sess.run(sigma)");
+        pw.println("        print sess.run(sigma)");
         pw.println();
         pw.println("# To Show Graph in Tensorboard");
         pw.println("writer=tf.summary.FileWriter(\"./\", sess.graph)");
