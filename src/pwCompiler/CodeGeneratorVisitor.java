@@ -1428,14 +1428,19 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
             paraChoose = true;
             pw.print("paras = [(");
             pw.print(ctx.para().IDENT(0));
-            for (int i = 1; i < ctx.para().IDENT().size(); i++) {
+            for (int i = 1; i < ctx.para().IDENT().size() - 1; i++) {
                 pw.print(", " + ctx.para().IDENT(i));
             }
+            pw.print(", 1");
+            for (int i = 0; i < ctx.para().IDENT().size() - 1; i++) {
+                pw.print(" - " + ctx.para().IDENT(i));
+            }
             pw.print(") ");
-            for (int i = 0; i < ctx.para().IDENT().size(); i++) {
-                pw.print("for " + ctx.para().IDENT(i).getText() + " in linspace(" + ctx.para().pr(i*3).getText() + ", " + ctx.para().pr(i*3 + 1).getText() + ", " + ctx.para().pr(i*3 + 2).getText() + ") ");
+            for (int i = 0; i < ctx.para().IDENT().size() - 1; i++) {
+                pw.print("for " + ctx.para().IDENT(i).getText() + " in np.linspace(" + ctx.para().pr(i*3).getText() + ", " + ctx.para().pr(i*3 + 1).getText() + ", " + ctx.para().pr(i*3 + 2).getText() + ") ");
             }
             pw.println("]");
+
             pw.print("for (");
             pw.print(ctx.para().IDENT(0));
             for (int i = 1; i < ctx.para().IDENT().size(); i++) {
@@ -1451,7 +1456,7 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
         visit(ctx.stat(1));
 
         pw.println("    # Main Program");
-        pw.println("    with tf.Session() as sess:\n    sess.run(tf.global_variables_initializer())");
+        pw.println("    with tf.Session() as sess:\n        sess.run(tf.global_variables_initializer())");
 
         for (String code : scopeCode.get(0)) {
             pw.println(code);
