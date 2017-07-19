@@ -1420,9 +1420,13 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
 
         pw.println("import numpy as np");
         pw.println("import tensorflow as tf");
+        pw.println("from mpl_toolkits.mplot3d import Axes3D");
+        pw.println("import matplotlib.pyplot as plt");
         pw.println();
 
+
         if (ctx.para() == null) {
+
             pw.println("for p in range(1):");
         } else {
             paraChoose = true;
@@ -1441,13 +1445,20 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
             }
             pw.println("]");
 
+            pw.println("para = -1");
+            pw.println("result = [[] for x in range(len(paras))]");
+
             pw.print("for (");
             pw.print(ctx.para().IDENT(0));
             for (int i = 1; i < ctx.para().IDENT().size(); i++) {
                 pw.print(", " + ctx.para().IDENT(i));
             }
             pw.println(") in paras:");
+
+            pw.println("    para = para + 1");
         }
+
+
 
         scopeCode.add(new ArrayList<String>());
 
@@ -1463,6 +1474,32 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
         }
 
         pw.println("        print sess.run(sigma)");
+
+        if (ctx.para() == null) {
+            pw.println("        result = sess.run(sigma)[0]");
+            pw.println("fig,ax = plt.subplots()");
+            pw.println("xs = np.arange(" + totaldim + ")");
+            pw.println("ax.bar(xs, result)");
+            pw.println("plt.show()");
+        } else {
+            pw.println("        result[para] = sess.run(sigma)[0]");
+            pw.println();
+
+            pw.println("fig = plt.figure()");
+            pw.println("ax = fig.add_subplot(111, projection = '3d')");
+            pw.println("for z in range(para + 1):");
+
+            pw.println("    xs = np.arange(" + totaldim + ")");
+            pw.println("    ys = result[z]");
+            pw.println("    ax.bar(xs, ys, zs = z, zdir = 'y')");
+
+            pw.println("ax.set_xlabel('Sigma')");
+            pw.println("ax.set_ylabel('Parameters')");
+            pw.println("ax.set_zlabel('Probability')");
+
+            pw.println("plt.show()");
+        }
+
         pw.println();
         pw.println("# To Show Graph in Tensorboard");
         pw.println("writer=tf.summary.FileWriter(\"./\", sess.graph)");
