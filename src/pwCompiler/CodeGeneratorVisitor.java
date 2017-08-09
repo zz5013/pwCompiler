@@ -1416,6 +1416,12 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
     }
 
     @Override
+    public Value visitParaInc(pWhileParser.ParaIncContext ctx) {
+        scopeCode.get(currentScope).add("        " + ctx.IDENT().getText() + " " + ctx.binOpP2().getText() + "= " + ctx.pr().getText());
+        return null;
+    }
+
+    @Override
     public Value visitProg(pWhileParser.ProgContext ctx) {
 
         pw.println("import numpy as np");

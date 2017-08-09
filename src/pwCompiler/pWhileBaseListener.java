@@ -220,6 +220,18 @@ public class pWhileBaseListener implements pWhileListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterParaInc(pWhileParser.ParaIncContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitParaInc(pWhileParser.ParaIncContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterBinOp1Expr(pWhileParser.BinOp1ExprContext ctx) { }
 	/**
 	 * {@inheritDoc}

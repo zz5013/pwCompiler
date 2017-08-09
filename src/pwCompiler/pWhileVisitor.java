@@ -124,6 +124,13 @@ public interface pWhileVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitIf(pWhileParser.IfContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code paraInc}
+	 * labeled alternative in {@link pWhileParser#stat}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParaInc(pWhileParser.ParaIncContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code binOp1Expr}
 	 * labeled alternative in {@link pWhileParser#expr}.
 	 * @param ctx the parse tree

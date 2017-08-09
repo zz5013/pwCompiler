@@ -207,6 +207,17 @@ public class PrintVisitPath implements pWhileListener {
      * <p>The default implementation does nothing.</p>
      */
     @Override public void exitIf(pWhileParser.IfContext ctx) {System.err.println("enter/exit node");}
+
+    @Override
+    public void enterParaInc(pWhileParser.ParaIncContext ctx) {
+        System.err.println("enter/exit node");
+    }
+
+    @Override
+    public void exitParaInc(pWhileParser.ParaIncContext ctx) {
+        System.err.println("enter/exit node");
+    }
+
     /**
      * {@inheritDoc}
      *

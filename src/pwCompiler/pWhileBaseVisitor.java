@@ -136,6 +136,13 @@ public class pWhileBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitParaInc(pWhileParser.ParaIncContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitBinOp1Expr(pWhileParser.BinOp1ExprContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

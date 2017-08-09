@@ -24,6 +24,7 @@ NEQ:        '!=';
 AND:        '&&';
 OR:         '||';
 NOT:        '!' ;
+SEQ:        '=';
 
 
 //stats
@@ -128,6 +129,7 @@ stat  : SKIPP                                   #skip
       | IF expr THEN stat ELSE stat FI          #if
       | WHILE expr DO (OPEN_SQUARE_BRACKET INTEGER CLOSE_SQUARE_BRACKET)? (OPEN_SQUARE_BRACKET LT pr CLOSE_SQUARE_BRACKET)? stat OD  #while
       | CHOOSE pr DECLARE stat (ORR pr DECLARE stat)+ RO   #choose
+      | IDENT binOpP2 SEQ pr                     #paraInc
       | stat SEMICOLON stat                     #statlist
 ;
 

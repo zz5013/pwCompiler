@@ -200,6 +200,18 @@ public interface pWhileListener extends ParseTreeListener {
 	 */
 	void exitIf(pWhileParser.IfContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code paraInc}
+	 * labeled alternative in {@link pWhileParser#stat}.
+	 * @param ctx the parse tree
+	 */
+	void enterParaInc(pWhileParser.ParaIncContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code paraInc}
+	 * labeled alternative in {@link pWhileParser#stat}.
+	 * @param ctx the parse tree
+	 */
+	void exitParaInc(pWhileParser.ParaIncContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code binOp1Expr}
 	 * labeled alternative in {@link pWhileParser#expr}.
 	 * @param ctx the parse tree
