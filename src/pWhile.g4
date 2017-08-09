@@ -158,6 +158,6 @@ valueRange: OPEN_CURLY_BRACKET (expr(COMMA expr)*)? CLOSE_CURLY_BRACKET
 para: PARA (IDENT DECLARE OPEN_SQUARE_BRACKET pr COMMA pr COMMA pr CLOSE_SQUARE_BRACKET)+ IDENT;
 
 // main program
-prog: (para)? VAR stat SEMICOLON BEGIN stat SEMICOLON END EOF;
+prog: (para)* VAR stat SEMICOLON BEGIN stat SEMICOLON END EOF;
 // EOF indicates that the program must consume to the end of the input.
 

@@ -1430,18 +1430,36 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
             pw.println("for p in range(1):");
         } else {
             paraChoose = true;
+
             pw.print("paras = [(");
-            pw.print(ctx.para().IDENT(0));
-            for (int i = 1; i < ctx.para().IDENT().size() - 1; i++) {
-                pw.print(", " + ctx.para().IDENT(i));
+            //The first set of paras
+            pw.print(ctx.para(0).IDENT(0));
+            for (int i = 1; i < ctx.para(0).IDENT().size() - 1; i++) {
+                pw.print(", " + ctx.para(0).IDENT(i));
             }
             pw.print(", 1");
-            for (int i = 0; i < ctx.para().IDENT().size() - 1; i++) {
-                pw.print(" - " + ctx.para().IDENT(i));
+            for (int i = 0; i < ctx.para(0).IDENT().size() - 1; i++) {
+                pw.print(" - " + ctx.para(0).IDENT(i));
             }
+            //All sets of paras following
+            for (int p = 1; p < ctx.para().size(); p++) {
+                pw.print(", ");
+                pw.print(ctx.para(p).IDENT(0));
+                for (int i = 1; i < ctx.para(p).IDENT().size() - 1; i++) {
+                    pw.print(", " + ctx.para(p).IDENT(i));
+                }
+                pw.print(", 1");
+                for (int i = 0; i < ctx.para(p).IDENT().size() - 1; i++) {
+                    pw.print(" - " + ctx.para(p).IDENT(i));
+                }
+            }
+
             pw.print(") ");
-            for (int i = 0; i < ctx.para().IDENT().size() - 1; i++) {
-                pw.print("for " + ctx.para().IDENT(i).getText() + " in np.linspace(" + ctx.para().pr(i*3).getText() + ", " + ctx.para().pr(i*3 + 1).getText() + ", " + ctx.para().pr(i*3 + 2).getText() + ") ");
+            for (int p = 0; p < ctx.para().size(); p++) {
+
+                for (int i = 0; i < ctx.para(p).IDENT().size() - 1; i++) {
+                    pw.print("for " + ctx.para(p).IDENT(i).getText() + " in np.linspace(" + ctx.para(p).pr(i * 3).getText() + ", " + ctx.para(p).pr(i * 3 + 1).getText() + ", " + ctx.para(p).pr(i * 3 + 2).getText() + ") ");
+                }
             }
             pw.println("]");
 
@@ -1449,10 +1467,19 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
             pw.println("result = [[] for x in range(len(paras))]");
 
             pw.print("for (");
-            pw.print(ctx.para().IDENT(0));
-            for (int i = 1; i < ctx.para().IDENT().size(); i++) {
-                pw.print(", " + ctx.para().IDENT(i));
+            //The first set
+            pw.print(ctx.para(0).IDENT(0));
+            for (int i = 1; i < ctx.para(0).IDENT().size(); i++) {
+                pw.print(", " + ctx.para(0).IDENT(i));
             }
+            for (int p = 1; p < ctx.para().size(); p++) {
+                pw.print(", ");
+                pw.print(ctx.para(p).IDENT(0));
+                for (int i = 1; i < ctx.para(p).IDENT().size(); i++) {
+                    pw.print(", " + ctx.para(p).IDENT(i));
+                }
+            }
+            //Sets following
             pw.println(") in paras:");
 
             pw.println("    para = para + 1");
