@@ -1,0 +1,21 @@
+para
+   ak : [.2, 1, 5]
+   am
+para
+   bk : [.2, 1, 5]
+   bm
+var
+   t : {0, 1};
+   c : {0, 1};
+begin
+   choose 1/2 : t := 0 or 1/2 : t := 1 ro;
+   c := 1;
+   while (c == 1) do
+     if (t == 0) then
+       choose ak : c := 0 or am : t := 1 ro
+     else
+       choose bk : c := 0 or bm : t := 0 ro
+     fi
+   od;
+stop;
+end
