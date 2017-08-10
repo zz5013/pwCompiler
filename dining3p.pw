@@ -1,0 +1,43 @@
+var
+   p1 : {0, 1};
+   p2 : {0, 1};
+   p3 : {0, 1};
+   c1 : {0, 1};
+   c2 : {0, 1};
+   c3 : {0, 1};
+   payer : {0, 1, 2, 3};
+begin
+   choose 1/2 : payer := 0 or 1/6 : payer := 1 or 1/6 : payer := 2 or 1/6 : payer := 3 ro;
+   choose 1/2 : c1 := 0 or 1/2 : c1 := 1 ro;
+   choose 1/2 : c2 := 0 or 1/2 : c2 := 1 ro;
+   choose 1/2 : c3 := 0 or 1/2 : c3 := 1 ro;
+   if (payer == 0) then
+     if (c1 == c3) then p1 := 0 else p1 := 1 fi;
+     if (c1 == c2) then p2 := 0 else p2 := 1 fi;
+     if (c2 == c3) then p3 := 0 else p3 := 1 fi
+   else
+     skip
+   fi;
+   if (payer == 1) then
+     if (c1 == c3) then p1 := 1 else p1 := 0 fi;
+     if (c1 == c2) then p2 := 0 else p2 := 1 fi;
+     if (c2 == c3) then p3 := 0 else p3 := 1 fi
+   else
+     skip
+   fi;
+   if (payer == 2) then
+     if (c1 == c3) then p1 := 0 else p1 := 1 fi;
+     if (c1 == c2) then p2 := 1 else p2 := 0 fi;
+     if (c2 == c3) then p3 := 0 else p3 := 1 fi
+   else
+     skip
+   fi;
+   if (payer == 3) then
+     if (c1 == c3) then p1 := 0 else p1 := 1 fi;
+     if (c1 == c2) then p2 := 0 else p2 := 1 fi;
+     if (c2 == c3) then p3 := 1 else p3 := 0 fi
+   else
+     skip
+   fi;
+stop;
+end

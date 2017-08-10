@@ -1431,7 +1431,7 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
         pw.println();
 
 
-        if (ctx.para() == null) {
+        if (ctx.para(0) == null) {
 
             pw.println("for p in range(1):");
         } else {
@@ -1508,7 +1508,7 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
 
         pw.println("        print sess.run(sigma)");
 
-        if (ctx.para() == null) {
+        if (ctx.para(0) == null) {
             pw.println("        result = sess.run(sigma)[0]");
             pw.println("fig,ax = plt.subplots()");
             pw.println("xs = np.arange(" + totaldim + ")");
