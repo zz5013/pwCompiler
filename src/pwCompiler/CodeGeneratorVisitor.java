@@ -1506,16 +1506,18 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
             pw.println(code);
         }
 
-        pw.println("        print sess.run(sigma)");
+
 
         if (ctx.para(0) == null) {
             pw.println("        result = sess.run(sigma)[0]");
+            pw.println("        print result");
             pw.println("fig,ax = plt.subplots()");
             pw.println("xs = np.arange(" + totaldim + ")");
             pw.println("ax.bar(xs, result)");
             pw.println("plt.show()");
         } else {
             pw.println("        result[para] = sess.run(sigma)[0]");
+            pw.println("        print result[para]");
             pw.println();
 
             pw.println("fig = plt.figure()");
