@@ -1,0 +1,25 @@
+para
+   p1 : [0, 1, 2]  #0isSame,1isDifferent
+   q1
+para
+   p2 : [0, 1, 2]
+   q2
+para
+   p3 : [0, 1, 2]
+   q3
+var
+   payer : {0, 1};   #0isAgency,1isOneOfCryptographer
+   c1 : {0, 1};
+   c2 : {0, 1};
+   c3 : {0, 1};
+begin
+   choose 1/2 : c1 := 0 or 1/2 : c1 := 1 ro;
+   choose p2: c2 := 1 - c1 or q2 : c2 := c1 ro;
+   choose p3: c3 := 1 - c2 or q3 : c3 := c2 ro;
+   if (c1 == c3) then
+      choose p1: payer := 1 or q1 : payer := 0 ro
+   else
+      choose p1: payer := 0 or q1 : payer := 1 ro
+   fi;
+stop;
+end
