@@ -1044,267 +1044,624 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
 
     @Override
     public Value visitWhile(pWhileParser.WhileContext ctx) {
+       if(ctx.IDENT(0) == null) {
+           if (!ctx.expr().getText().equals("true") && ctx.INTEGER() == null && ctx.LT() == null) {
+               // 1
+               visit(ctx.expr());
+               int testOpCount = TOCounter;
+               currentScope++;
+               if (scopeCode.size() <= currentScope) {
+                   scopeCode.add(new ArrayList<String>());
+               }
+
+               visit(ctx.stat());
+
+               pw.println("    # Define WHILE Statement");
+               pw.println("    def condition" + testOpCount + "(sigma):");
+               pw.println("        sigma = tf.matmul(sigma, testOp" + testOpCount + ")");
+
+               pw.println("        return tf.logical_not(tf.reduce_all(tf.equal(sigma, tf.zeros([" + totaldim + "], dtype=tf.float64))))");
+
+               pw.println("    def body" + testOpCount + "(sigma):");
+               pw.println("        outOfLoop = tf.matmul(sigma, testNOp" + testOpCount + ")");
+               pw.println("        sigma = tf.matmul(sigma, " + "testOp" + testOpCount + ")");
+               // whilecode
+               for (String code : scopeCode.get(currentScope)) {
+                   pw.println(code);
+               }
+               scopeCode.get(currentScope).clear();
+
+               pw.println("        sigma = tf.add(sigma, outOfLoop)");
+               pw.println("        return sigma");
+               pw.println();
+
+               currentScope--;
+
+               scopeCode.get(currentScope).add("        sigma = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma])");
+
+           } else if (!ctx.expr().getText().equals("true") && ctx.INTEGER() != null && ctx.LT() == null) {
+//2
+               int limit = Integer.parseInt(ctx.INTEGER().getText());
+               visit(ctx.expr());
+               int testOpCount = TOCounter;
+               currentScope++;
+               if (scopeCode.size() <= currentScope) {
+                   scopeCode.add(new ArrayList<String>());
+               }
+
+               visit(ctx.stat());
+
+               pw.println("    # Define WHILE Statement");
+               pw.println("    loopCount" + testOpCount + " = tf.Variable(0)");
+               pw.println("    def condition" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
+               pw.println("        sigma = tf.matmul(sigma, testOp" + testOpCount + ")");
+
+               pw.println("        return tf.logical_and(tf.logical_not(tf.reduce_all(tf.equal(sigma, tf.zeros([" + totaldim + "], " +
+                       "dtype=tf.float64)))), tf.less(loopCount" + testOpCount + ", tf.constant(" + limit + ")))");
+
+               pw.println("    def body" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
+               pw.println("        loopCount" + testOpCount + " = tf.add(loopCount" + testOpCount + ", tf.constant(1))");
+               pw.println("        outOfLoop = tf.matmul(sigma, testNOp" + testOpCount + ")");
+               pw.println("        sigma = tf.matmul(sigma, " + "testOp" + testOpCount + ")");
+               // whilecode
+               for (String code : scopeCode.get(currentScope)) {
+                   pw.println(code);
+               }
+               scopeCode.get(currentScope).clear();
+
+               pw.println("        sigma = tf.add(sigma, outOfLoop)");
+               pw.println("        return sigma, loopCount" + testOpCount);
+               pw.println();
+
+               currentScope--;
+
+               scopeCode.get(currentScope).add("        sigma, loopCount" + testOpCount + " = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma, loopCount" + testOpCount + "])");
+
+           } else if (!ctx.expr().getText().equals("true") && ctx.INTEGER() == null && ctx.LT() != null) {
+//3
+               visit(ctx.expr());
+               int testOpCount = TOCounter;
+               currentScope++;
+               if (scopeCode.size() <= currentScope) {
+                   scopeCode.add(new ArrayList<String>());
+               }
+
+               double epsilon = (double) visit(ctx.pr(0)).getValue();
+
+               visit(ctx.stat());
+
+
+               pw.println("    # Define WHILE Statement");
+               pw.println("    epsilon" + testOpCount + " = tf.Variable(" + epsilon + ", dtype=tf.float64)");
+               pw.println("    def condition" + testOpCount + "(sigma):");
+               pw.println("        remain = tf.reduce_sum(sigma)");
+               pw.println("        sigma = tf.matmul(sigma, testOp" + testOpCount + ")");
+
+               pw.println("        return tf.logical_and(tf.logical_not(tf.reduce_all(tf.equal(sigma, tf.zeros([" + totaldim + "], dtype=tf.float64)))), tf.greater(remain, epsilon" + testOpCount + "))");
+
+               pw.println("    def body" + testOpCount + "(sigma):");
+               pw.println("        outOfLoop = tf.matmul(sigma, testNOp" + testOpCount + ")");
+               pw.println("        sigma = tf.matmul(sigma, " + "testOp" + testOpCount + ")");
+               // whilecode
+               for (String code : scopeCode.get(currentScope)) {
+                   pw.println(code);
+               }
+               scopeCode.get(currentScope).clear();
 
-        if (!ctx.expr().getText().equals("true") && ctx.INTEGER() == null && ctx.pr() == null) {
-            visit(ctx.expr());
-            int testOpCount = TOCounter;
-            currentScope++;
-            if (scopeCode.size() <= currentScope) {
-                scopeCode.add(new ArrayList<String >());
-            }
+               pw.println("        sigma = tf.add(sigma, outOfLoop)");
+               pw.println("        return sigma");
+               pw.println();
 
-            visit(ctx.stat());
+               currentScope--;
 
-            pw.println("    # Define WHILE Statement");
-            pw.println("    def condition" + testOpCount + "(sigma):");
-            pw.println("        sigma = tf.matmul(sigma, testOp" + testOpCount + ")");
+               scopeCode.get(currentScope).add("        sigma = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma])");
 
-            pw.println("        return tf.logical_not(tf.reduce_all(tf.equal(sigma, tf.zeros([" + totaldim + "], dtype=tf.float64))))");
+           } else if (!ctx.expr().getText().equals("true") && ctx.INTEGER() != null && ctx.LT() != null) {
+               //4
+               int limit = Integer.parseInt(ctx.INTEGER().getText());
+               visit(ctx.expr());
+               int testOpCount = TOCounter;
+               currentScope++;
+               if (scopeCode.size() <= currentScope) {
+                   scopeCode.add(new ArrayList<String>());
+               }
 
-            pw.println("    def body" + testOpCount + "(sigma):");
-            pw.println("        outOfLoop = tf.matmul(sigma, testNOp" + testOpCount + ")");
-            pw.println("        sigma = tf.matmul(sigma, " + "testOp" + testOpCount + ")");
-            // whilecode
-            for (String code : scopeCode.get(currentScope)) {
-                pw.println(code);
-            }
-            scopeCode.get(currentScope).clear();
+               double epsilon = (double) visit(ctx.pr(0)).getValue();
 
-            pw.println("        sigma = tf.add(sigma, outOfLoop)");
-            pw.println("        return sigma");
-            pw.println();
-
-            currentScope--;
+               visit(ctx.stat());
 
-            scopeCode.get(currentScope).add("        sigma = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma])");
-
-        } else if (!ctx.expr().getText().equals("true") && ctx.INTEGER() != null && ctx.pr() == null) {
+               pw.println("    # Define WHILE Statement");
+               pw.println("    epsilon" + testOpCount + " = tf.Variable(" + epsilon + ", dtype=tf.float64)");
+               pw.println("    loopCount" + testOpCount + " = tf.Variable(0)");
+               pw.println("    def condition" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
+               pw.println("        remain = tf.reduce_sum(sigma)");
+               pw.println("        sigma = tf.matmul(sigma, testOp" + testOpCount + ")");
 
-            int limit = Integer.parseInt(ctx.INTEGER().getText());
-            visit(ctx.expr());
-            int testOpCount = TOCounter;
-            currentScope++;
-            if (scopeCode.size() <= currentScope) {
-                scopeCode.add(new ArrayList<String >());
-            }
-
-            visit(ctx.stat());
-
-            pw.println("    # Define WHILE Statement");
-            pw.println("    loopCount" + testOpCount + " = tf.Variable(0)");
-            pw.println("    def condition" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
-            pw.println("        sigma = tf.matmul(sigma, testOp" + testOpCount + ")");
-
-            pw.println("        return tf.logical_and(tf.logical_not(tf.reduce_all(tf.equal(sigma, tf.zeros([" + totaldim + "], " +
-                    "dtype=tf.float64)))), tf.less(loopCount" + testOpCount + ", tf.constant(" + limit + ")))");
-
-            pw.println("    def body" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
-            pw.println("        loopCount" + testOpCount + " = tf.add(loopCount" + testOpCount + ", tf.constant(1))");
-            pw.println("        outOfLoop = tf.matmul(sigma, testNOp" + testOpCount + ")");
-            pw.println("        sigma = tf.matmul(sigma, " + "testOp" + testOpCount + ")");
-            // whilecode
-            for (String code : scopeCode.get(currentScope)) {
-                pw.println(code);
-            }
-            scopeCode.get(currentScope).clear();
+               pw.println("        return tf.logical_and(tf.logical_and(tf.logical_not(tf.reduce_all(tf.equal(sigma, tf.zeros([" + totaldim + "], " +
+                       "dtype=tf.float64)))), tf.less(loopCount" + testOpCount + ", tf.constant(" + limit + "))), tf.greater(remain, epsilon" + testOpCount + "))");
 
-            pw.println("        sigma = tf.add(sigma, outOfLoop)");
-            pw.println("        return sigma, loopCount" + testOpCount);
-            pw.println();
+               pw.println("    def body" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
+               pw.println("        loopCount" + testOpCount + " = tf.add(loopCount" + testOpCount + ", tf.constant(1))");
+               pw.println("        outOfLoop = tf.matmul(sigma, testNOp" + testOpCount + ")");
+               pw.println("        sigma = tf.matmul(sigma, " + "testOp" + testOpCount + ")");
+               // whilecode
+               for (String code : scopeCode.get(currentScope)) {
+                   pw.println(code);
+               }
+               scopeCode.get(currentScope).clear();
 
-            currentScope--;
+               pw.println("        sigma = tf.add(sigma, outOfLoop)");
+               pw.println("        return sigma, loopCount" + testOpCount);
+               pw.println();
 
-            scopeCode.get(currentScope).add("        sigma, loopCount" + testOpCount + " = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma, loopCount" + testOpCount + "])");
+               currentScope--;
 
-        } else if (!ctx.expr().getText().equals("true") && ctx.INTEGER() == null && ctx.pr() != null) {
+               scopeCode.get(currentScope).add("        sigma, loopCount" + testOpCount + " = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma, loopCount" + testOpCount + "])");
 
-            visit(ctx.expr());
-            int testOpCount = TOCounter;
-            currentScope++;
-            if (scopeCode.size() <= currentScope) {
-                scopeCode.add(new ArrayList<String >());
-            }
+           } else if (ctx.expr().getText().equals("true") && ctx.INTEGER() == null && ctx.LT() == null) {
+               //5
+               // should not have this situation
 
-            double epsilon = (double) visit(ctx.pr()).getValue();
+           } else if (ctx.expr().getText().equals("true") && ctx.INTEGER() != null && ctx.LT() == null) {
+               //6
 
-            visit(ctx.stat());
+               int limit = Integer.parseInt(ctx.INTEGER().getText());
 
 
-            pw.println("    # Define WHILE Statement");
-            pw.println("    epsilon" + testOpCount + " = tf.Variable(" + epsilon + ", dtype=tf.float64)");
-            pw.println("    def condition" + testOpCount + "(sigma):");
-            pw.println("        remain = tf.reduce_sum(sigma)");
-            pw.println("        sigma = tf.matmul(sigma, testOp" + testOpCount + ")");
+               int testOpCount = TOCounter;
+               currentScope++;
+               if (scopeCode.size() <= currentScope) {
+                   scopeCode.add(new ArrayList<String>());
+               }
 
-            pw.println("        return tf.logical_and(tf.logical_not(tf.reduce_all(tf.equal(sigma, tf.zeros([" + totaldim + "], dtype=tf.float64)))), tf.greater(remain, epsilon" + testOpCount + "))");
+               visit(ctx.stat());
 
-            pw.println("    def body" + testOpCount + "(sigma):");
-            pw.println("        outOfLoop = tf.matmul(sigma, testNOp" + testOpCount + ")");
-            pw.println("        sigma = tf.matmul(sigma, " + "testOp" + testOpCount + ")");
-            // whilecode
-            for (String code : scopeCode.get(currentScope)) {
-                pw.println(code);
-            }
-            scopeCode.get(currentScope).clear();
+               pw.println("    # Define WHILE Statement");
+               pw.println("    loopCount" + testOpCount + " = tf.Variable(0)");
+               pw.println("    def condition" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
 
-            pw.println("        sigma = tf.add(sigma, outOfLoop)");
-            pw.println("        return sigma");
-            pw.println();
+               pw.println("        return tf.less(loopCount" + testOpCount + ", tf.constant(" + limit + "))");
 
-            currentScope--;
+               pw.println("    def body" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
+               pw.println("        loopCount" + testOpCount + " = tf.add(loopCount" + testOpCount + ", tf.constant(1))");
+               // whilecode
+               for (String code : scopeCode.get(currentScope)) {
+                   pw.println(code);
+               }
+               scopeCode.get(currentScope).clear();
 
-            scopeCode.get(currentScope).add("        sigma = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma])");
+               pw.println("        return sigma, loopCount" + testOpCount);
+               pw.println();
 
-        } else if (!ctx.expr().getText().equals("true") && ctx.INTEGER() != null && ctx.pr() != null) {
-            int limit = Integer.parseInt(ctx.INTEGER().getText());
-            visit(ctx.expr());
-            int testOpCount = TOCounter;
-            currentScope++;
-            if (scopeCode.size() <= currentScope) {
-                scopeCode.add(new ArrayList<String >());
-            }
+               currentScope--;
 
-            double epsilon = (double) visit(ctx.pr()).getValue();
+               scopeCode.get(currentScope).add("        sigma, loopCount" + testOpCount + " = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma, loopCount" + testOpCount + "])");
 
-            visit(ctx.stat());
+           } else if (ctx.expr().getText().equals("true") && ctx.INTEGER() == null && ctx.LT() != null) {
+               //7
 
-            pw.println("    # Define WHILE Statement");
-            pw.println("    epsilon" + testOpCount + " = tf.Variable(" + epsilon + ", dtype=tf.float64)");
-            pw.println("    loopCount" + testOpCount + " = tf.Variable(0)");
-            pw.println("    def condition" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
-            pw.println("        remain = tf.reduce_sum(sigma)");
-            pw.println("        sigma = tf.matmul(sigma, testOp" + testOpCount + ")");
+               int testOpCount = TOCounter;
+               currentScope++;
+               if (scopeCode.size() <= currentScope) {
+                   scopeCode.add(new ArrayList<String>());
+               }
 
-            pw.println("        return tf.logical_and(tf.logical_and(tf.logical_not(tf.reduce_all(tf.equal(sigma, tf.zeros([" + totaldim + "], " +
-                    "dtype=tf.float64)))), tf.less(loopCount" + testOpCount + ", tf.constant(" + limit + "))), tf.greater(remain, epsilon" + testOpCount + "))");
+               double epsilon = (double) visit(ctx.pr(0)).getValue();
 
-            pw.println("    def body" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
-            pw.println("        loopCount" + testOpCount + " = tf.add(loopCount" + testOpCount + ", tf.constant(1))");
-            pw.println("        outOfLoop = tf.matmul(sigma, testNOp" + testOpCount + ")");
-            pw.println("        sigma = tf.matmul(sigma, " + "testOp" + testOpCount + ")");
-            // whilecode
-            for (String code : scopeCode.get(currentScope)) {
-                pw.println(code);
-            }
-            scopeCode.get(currentScope).clear();
+               visit(ctx.stat());
 
-            pw.println("        sigma = tf.add(sigma, outOfLoop)");
-            pw.println("        return sigma, loopCount" + testOpCount);
-            pw.println();
 
-            currentScope--;
+               pw.println("    # Define WHILE Statement");
+               pw.println("    epsilon" + testOpCount + " = tf.Variable(" + epsilon + ", dtype=tf.float64)");
+               pw.println("    def condition" + testOpCount + "(sigma):");
+               pw.println("        remain = tf.reduce_sum(sigma)");
 
-            scopeCode.get(currentScope).add("        sigma, loopCount" + testOpCount + " = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma, loopCount" + testOpCount + "])");
+               pw.println("        return tf.greater(remain, epsilon" + testOpCount + ")");
 
-        } else if (ctx.expr().getText().equals("true") && ctx.INTEGER() == null && ctx.pr() == null){
-            // should not have this situation
+               pw.println("    def body" + testOpCount + "(sigma):");
+               // whilecode
+               for (String code : scopeCode.get(currentScope)) {
+                   pw.println(code);
+               }
+               scopeCode.get(currentScope).clear();
 
-        }  else if (ctx.expr().getText().equals("true") && ctx.INTEGER() != null && ctx.pr() == null) {
+               pw.println("        return sigma");
+               pw.println();
 
-            int limit = Integer.parseInt(ctx.INTEGER().getText());
+               currentScope--;
 
+               scopeCode.get(currentScope).add("        sigma = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma])");
 
-            int testOpCount = TOCounter;
-            currentScope++;
-            if (scopeCode.size() <= currentScope) {
-                scopeCode.add(new ArrayList<String >());
-            }
+           } else if (ctx.expr().getText().equals("true") && ctx.INTEGER() != null && ctx.LT() != null) {
+               //8
+               int limit = Integer.parseInt(ctx.INTEGER().getText());
 
-            visit(ctx.stat());
 
-            pw.println("    # Define WHILE Statement");
-            pw.println("    loopCount" + testOpCount + " = tf.Variable(0)");
-            pw.println("    def condition" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
+               int testOpCount = TOCounter;
+               currentScope++;
+               if (scopeCode.size() <= currentScope) {
+                   scopeCode.add(new ArrayList<String>());
+               }
 
-            pw.println("        return tf.less(loopCount" + testOpCount + ", tf.constant(" + limit + "))");
+               double epsilon = (double) visit(ctx.pr(0)).getValue();
 
-            pw.println("    def body" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
-            pw.println("        loopCount" + testOpCount + " = tf.add(loopCount" + testOpCount + ", tf.constant(1))");
-            // whilecode
-            for (String code : scopeCode.get(currentScope)) {
-                pw.println(code);
-            }
-            scopeCode.get(currentScope).clear();
+               visit(ctx.stat());
 
-            pw.println("        return sigma, loopCount" + testOpCount);
-            pw.println();
+               pw.println("    # Define WHILE Statement");
+               pw.println("    epsilon" + testOpCount + " = tf.Variable(" + epsilon + ", dtype=tf.float64)");
+               pw.println("    loopCount" + testOpCount + " = tf.Variable(0)");
+               pw.println("    def condition" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
+               pw.println("        remain = tf.reduce_sum(sigma)");
 
-            currentScope--;
+               pw.println("        return tf.logical_and(tf.less(loopCount" + testOpCount + ", tf.constant(" + limit + ")), tf.greater(remain, epsilon" + testOpCount + "))");
 
-            scopeCode.get(currentScope).add("        sigma, loopCount" + testOpCount + " = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma, loopCount" + testOpCount + "])");
+               pw.println("    def body" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
+               pw.println("        loopCount" + testOpCount + " = tf.add(loopCount" + testOpCount + ", tf.constant(1))");
+               // whilecode
+               for (String code : scopeCode.get(currentScope)) {
+                   pw.println(code);
+               }
+               scopeCode.get(currentScope).clear();
 
-        } else if (ctx.expr().getText().equals("true") && ctx.INTEGER() == null && ctx.pr() != null) {
+               pw.println("        return sigma, loopCount" + testOpCount);
+               pw.println();
 
-            int testOpCount = TOCounter;
-            currentScope++;
-            if (scopeCode.size() <= currentScope) {
-                scopeCode.add(new ArrayList<String >());
-            }
+               currentScope--;
 
-            double epsilon = (double) visit(ctx.pr()).getValue();
+               scopeCode.get(currentScope).add("        sigma, loopCount" + testOpCount + " = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma, loopCount" + testOpCount + "])");
 
-            visit(ctx.stat());
+           }
+       } else {
+           // dual
+           if (!ctx.expr().getText().equals("true") && ctx.INTEGER() == null && ctx.LT() == null) {
+               // 1
+               visit(ctx.expr());
+               int testOpCount = TOCounter;
+               currentScope++;
+               if (scopeCode.size() <= currentScope) {
+                   scopeCode.add(new ArrayList<String >());
+               }
 
+               visit(ctx.stat());
 
-            pw.println("    # Define WHILE Statement");
-            pw.println("    epsilon" + testOpCount + " = tf.Variable(" + epsilon + ", dtype=tf.float64)");
-            pw.println("    def condition" + testOpCount + "(sigma):");
-            pw.println("        remain = tf.reduce_sum(sigma)");
+               pw.println("    # Define WHILE Statement");
+               pw.println("    def condition" + testOpCount + "(sigma, " + ctx.IDENT(0) + ", " +  ctx.IDENT(1) +"):");
+               pw.println("        sigma = tf.matmul(sigma, testOp" + testOpCount + ")");
 
-            pw.println("        return tf.greater(remain, epsilon" + testOpCount + ")");
+               pw.println("        return tf.logical_not(tf.reduce_all(tf.equal(sigma, tf.zeros([" + totaldim + "], dtype=tf.float64))))");
 
-            pw.println("    def body" + testOpCount + "(sigma):");
-            // whilecode
-            for (String code : scopeCode.get(currentScope)) {
-                pw.println(code);
-            }
-            scopeCode.get(currentScope).clear();
+               pw.println("    def body" + testOpCount + "(sigma, " + ctx.IDENT(0) + ", " +  ctx.IDENT(1) + "):");
+               pw.println("        outOfLoop = tf.matmul(sigma, testNOp" + testOpCount + ")");
+               pw.println("        sigma = tf.matmul(sigma, " + "testOp" + testOpCount + ")");
+               // whilecode
+               for (String code : scopeCode.get(currentScope)) {
+                   pw.println(code);
+               }
+               scopeCode.get(currentScope).clear();
 
-            pw.println("        return sigma");
-            pw.println();
+               pw.println("        sigma = tf.add(sigma, outOfLoop)");
 
-            currentScope--;
+               double inc = (double) visit(ctx.pr(0)).getValue();
+               //dual
+               pw.println("        def f1(): return tf.add(" + ctx.IDENT(0) + ", tf.constant("+ inc +  "*np.identity(" + totaldim + "), dtype=tf.float64))");
+               pw.println("        def f2(): return " + ctx.IDENT(0));
+               pw.println("        " + ctx.IDENT(0) + " = tf.cond(tf.less(" + ctx.IDENT(0) + "[0,0], tf.constant(np.identity(" + totaldim + "), dtype=tf.float64)[0,0]), f1, f2)");
 
-            scopeCode.get(currentScope).add("        sigma = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma])");
+               pw.println("        def f1(): return tf.subtract(" + ctx.IDENT(1) + ", tf.constant(" + inc + "*np.identity(" + totaldim + "), dtype=tf.float64))");
+               pw.println("        def f2(): return " + ctx.IDENT(1));
+               pw.println("        " + ctx.IDENT(1) + " = tf.cond(tf.greater(" + ctx.IDENT(1) + "[0,0], tf.constant(np.zeros((" + totaldim + "," + totaldim + ")), dtype=tf.float64)[0,0]), f1, f2)");
 
-        } else if (ctx.expr().getText().equals("true") && ctx.INTEGER() != null && ctx.pr() != null) {
-            int limit = Integer.parseInt(ctx.INTEGER().getText());
 
+               pw.println("        return sigma, " + ctx.IDENT(0) + ", " +  ctx.IDENT(1));
+               pw.println();
 
-            int testOpCount = TOCounter;
-            currentScope++;
-            if (scopeCode.size() <= currentScope) {
-                scopeCode.add(new ArrayList<String >());
-            }
+               currentScope--;
 
-            double epsilon = (double) visit(ctx.pr()).getValue();
+               scopeCode.get(currentScope).add("        sigma, " + ctx.IDENT(0) + ", " +  ctx.IDENT(1) + " = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma, " + ctx.IDENT(0) + ", " +  ctx.IDENT(1) + "])");
 
-            visit(ctx.stat());
+           } else if (!ctx.expr().getText().equals("true") && ctx.INTEGER() != null && ctx.LT() == null) {
+//2
+               int limit = Integer.parseInt(ctx.INTEGER().getText());
+               visit(ctx.expr());
+               int testOpCount = TOCounter;
+               currentScope++;
+               if (scopeCode.size() <= currentScope) {
+                   scopeCode.add(new ArrayList<String >());
+               }
 
-            pw.println("    # Define WHILE Statement");
-            pw.println("    epsilon" + testOpCount + " = tf.Variable(" + epsilon + ", dtype=tf.float64)");
-            pw.println("    loopCount" + testOpCount + " = tf.Variable(0)");
-            pw.println("    def condition" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
-            pw.println("        remain = tf.reduce_sum(sigma)");
+               visit(ctx.stat());
 
-            pw.println("        return tf.logical_and(tf.less(loopCount" + testOpCount + ", tf.constant(" + limit + ")), tf.greater(remain, epsilon" + testOpCount + "))");
+               pw.println("    # Define WHILE Statement");
+               pw.println("    loopCount" + testOpCount + " = tf.Variable(0)");
+               pw.println("    def condition" + testOpCount + "(sigma, loopCount" + testOpCount + ", " + ctx.IDENT(0) + ", " + ctx.IDENT(1) + "):");
+               pw.println("        sigma = tf.matmul(sigma, testOp" + testOpCount + ")");
 
-            pw.println("    def body" + testOpCount + "(sigma, loopCount" + testOpCount + "):");
-            pw.println("        loopCount" + testOpCount + " = tf.add(loopCount" + testOpCount + ", tf.constant(1))");
-            // whilecode
-            for (String code : scopeCode.get(currentScope)) {
-                pw.println(code);
-            }
-            scopeCode.get(currentScope).clear();
+               pw.println("        return tf.logical_and(tf.logical_not(tf.reduce_all(tf.equal(sigma, tf.zeros([" + totaldim + "], " +
+                       "dtype=tf.float64)))), tf.less(loopCount" + testOpCount + ", tf.constant(" + limit + ")))");
 
-            pw.println("        return sigma, loopCount" + testOpCount);
-            pw.println();
+               pw.println("    def body" + testOpCount + "(sigma, loopCount" + testOpCount + ", " + ctx.IDENT(0) + ", " + ctx.IDENT(1) + "):");
+               pw.println("        loopCount" + testOpCount + " = tf.add(loopCount" + testOpCount + ", tf.constant(1))");
+               pw.println("        outOfLoop = tf.matmul(sigma, testNOp" + testOpCount + ")");
+               pw.println("        sigma = tf.matmul(sigma, " + "testOp" + testOpCount + ")");
+               // whilecode
+               for (String code : scopeCode.get(currentScope)) {
+                   pw.println(code);
+               }
+               scopeCode.get(currentScope).clear();
 
-            currentScope--;
+               pw.println("        sigma = tf.add(sigma, outOfLoop)");
 
-            scopeCode.get(currentScope).add("        sigma, loopCount" + testOpCount + " = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma, loopCount" + testOpCount + "])");
+               double inc = (double) visit(ctx.pr(0)).getValue();
+               //dual
+               pw.println("        def f1(): return tf.add(" + ctx.IDENT(0) + ", tf.constant("+ inc +  "*np.identity(" + totaldim + "), dtype=tf.float64))");
+               pw.println("        def f2(): return " + ctx.IDENT(0));
+               pw.println("        " + ctx.IDENT(0) + " = tf.cond(tf.less(" + ctx.IDENT(0) + "[0,0], tf.constant(np.identity(" + totaldim + "), dtype=tf.float64)[0,0]), f1, f2)");
 
-        }
+               pw.println("        def f1(): return tf.subtract(" + ctx.IDENT(1) + ", tf.constant(" + inc + "*np.identity(" + totaldim + "), dtype=tf.float64))");
+               pw.println("        def f2(): return " + ctx.IDENT(1));
+               pw.println("        " + ctx.IDENT(1) + " = tf.cond(tf.greater(" + ctx.IDENT(1) + "[0,0], tf.constant(np.zeros((" + totaldim + "," + totaldim + ")), dtype=tf.float64)[0,0]), f1, f2)");
+
+
+               pw.println("        return sigma, loopCount" + testOpCount + ", " + ctx.IDENT(0) + ", " + ctx.IDENT(1));
+               pw.println();
+
+               currentScope--;
+
+               scopeCode.get(currentScope).add("        sigma, loopCount" + testOpCount + ", " + ctx.IDENT(0) + ", " + ctx.IDENT(1) + " = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma, loopCount" + testOpCount + ", " + ctx.IDENT(0) + ", " + ctx.IDENT(1) + "])");
+
+           } else if (!ctx.expr().getText().equals("true") && ctx.INTEGER() == null && ctx.LT() != null) {
+//3
+               visit(ctx.expr());
+               int testOpCount = TOCounter;
+               currentScope++;
+               if (scopeCode.size() <= currentScope) {
+                   scopeCode.add(new ArrayList<String >());
+               }
+
+               double epsilon = (double) visit(ctx.pr(0)).getValue();
+
+               visit(ctx.stat());
+
+
+               pw.println("    # Define WHILE Statement");
+               pw.println("    epsilon" + testOpCount + " = tf.Variable(" + epsilon + ", dtype=tf.float64)");
+               pw.println("    def condition" + testOpCount + "(sigma," + ctx.IDENT(0) + ", " + ctx.IDENT(1) + "):");
+               pw.println("        remain = tf.reduce_sum(sigma)");
+               pw.println("        sigma = tf.matmul(sigma, testOp" + testOpCount + ")");
+
+               pw.println("        return tf.logical_and(tf.logical_not(tf.reduce_all(tf.equal(sigma, tf.zeros([" + totaldim + "], dtype=tf.float64)))), tf.greater(remain, epsilon" + testOpCount + "))");
+
+               pw.println("    def body" + testOpCount + "(sigma," + ctx.IDENT(0) + ", " + ctx.IDENT(1) + "):");
+               pw.println("        outOfLoop = tf.matmul(sigma, testNOp" + testOpCount + ")");
+               pw.println("        sigma = tf.matmul(sigma, " + "testOp" + testOpCount + ")");
+               // whilecode
+               for (String code : scopeCode.get(currentScope)) {
+                   pw.println(code);
+               }
+               scopeCode.get(currentScope).clear();
+
+               pw.println("        sigma = tf.add(sigma, outOfLoop)");
+
+               double inc = (double) visit(ctx.pr(1)).getValue();
+               //dual
+               pw.println("        def f1(): return tf.add(" + ctx.IDENT(0) + ", tf.constant("+ inc +  "*np.identity(" + totaldim + "), dtype=tf.float64))");
+               pw.println("        def f2(): return " + ctx.IDENT(0));
+               pw.println("        " + ctx.IDENT(0) + " = tf.cond(tf.less(" + ctx.IDENT(0) + "[0,0], tf.constant(np.identity(" + totaldim + "), dtype=tf.float64)[0,0]), f1, f2)");
+
+               pw.println("        def f1(): return tf.subtract(" + ctx.IDENT(1) + ", tf.constant(" + inc + "*np.identity(" + totaldim + "), dtype=tf.float64))");
+               pw.println("        def f2(): return " + ctx.IDENT(1));
+               pw.println("        " + ctx.IDENT(1) + " = tf.cond(tf.greater(" + ctx.IDENT(1) + "[0,0], tf.constant(np.zeros((" + totaldim + "," + totaldim + ")), dtype=tf.float64)[0,0]), f1, f2)");
+
+
+               pw.println("        return sigma, " + ctx.IDENT(0) + ", " + ctx.IDENT(1));
+               pw.println();
+
+               currentScope--;
+
+               scopeCode.get(currentScope).add("        sigma, " + ctx.IDENT(0) + ", " +  ctx.IDENT(1) + " = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma, " + ctx.IDENT(0) + ", " +  ctx.IDENT(1) + "])");
+
+           } else if (!ctx.expr().getText().equals("true") && ctx.INTEGER() != null && ctx.LT() != null) {
+               //4
+               int limit = Integer.parseInt(ctx.INTEGER().getText());
+               visit(ctx.expr());
+               int testOpCount = TOCounter;
+               currentScope++;
+               if (scopeCode.size() <= currentScope) {
+                   scopeCode.add(new ArrayList<String >());
+               }
+
+               double epsilon = (double) visit(ctx.pr(0)).getValue();
+
+               visit(ctx.stat());
+
+               pw.println("    # Define WHILE Statement");
+               pw.println("    epsilon" + testOpCount + " = tf.Variable(" + epsilon + ", dtype=tf.float64)");
+               pw.println("    loopCount" + testOpCount + " = tf.Variable(0)");
+               pw.println("    def condition" + testOpCount + "(sigma, loopCount" + testOpCount + ", " + ctx.IDENT(0) + ", " + ctx.IDENT(1) + "):");
+               pw.println("        remain = tf.reduce_sum(sigma)");
+               pw.println("        sigma = tf.matmul(sigma, testOp" + testOpCount + ")");
+
+               pw.println("        return tf.logical_and(tf.logical_and(tf.logical_not(tf.reduce_all(tf.equal(sigma, tf.zeros([" + totaldim + "], " +
+                       "dtype=tf.float64)))), tf.less(loopCount" + testOpCount + ", tf.constant(" + limit + "))), tf.greater(remain, epsilon" + testOpCount + "))");
+
+               pw.println("    def body" + testOpCount + "(sigma, loopCount" + testOpCount + ", " + ctx.IDENT(0) + ", " + ctx.IDENT(1) + "):");
+               pw.println("        loopCount" + testOpCount + " = tf.add(loopCount" + testOpCount + ", tf.constant(1))");
+               pw.println("        outOfLoop = tf.matmul(sigma, testNOp" + testOpCount + ")");
+               pw.println("        sigma = tf.matmul(sigma, " + "testOp" + testOpCount + ")");
+               // whilecode
+               for (String code : scopeCode.get(currentScope)) {
+                   pw.println(code);
+               }
+               scopeCode.get(currentScope).clear();
+
+               pw.println("        sigma = tf.add(sigma, outOfLoop)");
+
+               double inc = (double) visit(ctx.pr(1)).getValue();
+               //dual
+               pw.println("        def f1(): return tf.add(" + ctx.IDENT(0) + ", tf.constant("+ inc +  "*np.identity(" + totaldim + "), dtype=tf.float64))");
+               pw.println("        def f2(): return " + ctx.IDENT(0));
+               pw.println("        " + ctx.IDENT(0) + " = tf.cond(tf.less(" + ctx.IDENT(0) + "[0,0], tf.constant(np.identity(" + totaldim + "), dtype=tf.float64)[0,0]), f1, f2)");
+
+               pw.println("        def f1(): return tf.subtract(" + ctx.IDENT(1) + ", tf.constant(" + inc + "*np.identity(" + totaldim + "), dtype=tf.float64))");
+               pw.println("        def f2(): return " + ctx.IDENT(1));
+               pw.println("        " + ctx.IDENT(1) + " = tf.cond(tf.greater(" + ctx.IDENT(1) + "[0,0], tf.constant(np.zeros((" + totaldim + "," + totaldim + ")), dtype=tf.float64)[0,0]), f1, f2)");
+
+
+               pw.println("        return sigma, loopCount" + testOpCount + ", " + ctx.IDENT(0) + ", " + ctx.IDENT(1));
+               pw.println();
+
+               currentScope--;
+
+               scopeCode.get(currentScope).add("        sigma, loopCount" + testOpCount + ", " + ctx.IDENT(0) + ", " + ctx.IDENT(1) + " = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma, loopCount" + testOpCount + ", " + ctx.IDENT(0) + ", " + ctx.IDENT(1) + "])");
+
+           } else if (ctx.expr().getText().equals("true") && ctx.INTEGER() == null && ctx.LT() == null){
+               //5
+               // should not have this situation
+
+           }  else if (ctx.expr().getText().equals("true") && ctx.INTEGER() != null && ctx.LT() == null) {
+               //6
+
+               int limit = Integer.parseInt(ctx.INTEGER().getText());
+
+
+               int testOpCount = TOCounter;
+               currentScope++;
+               if (scopeCode.size() <= currentScope) {
+                   scopeCode.add(new ArrayList<String >());
+               }
+
+               visit(ctx.stat());
+
+               pw.println("    # Define WHILE Statement");
+               pw.println("    loopCount" + testOpCount + " = tf.Variable(0)");
+               pw.println("    def condition" + testOpCount + "(sigma, loopCount" + testOpCount + ", " + ctx.IDENT(0) + "," + ctx.IDENT(1) + "):");
+
+               pw.println("        return tf.less(loopCount" + testOpCount + ", tf.constant(" + limit + "))");
+
+               pw.println("    def body" + testOpCount + "(sigma, loopCount" + testOpCount + ", " + ctx.IDENT(0) + "," + ctx.IDENT(1) + "):");
+               pw.println("        loopCount" + testOpCount + " = tf.add(loopCount" + testOpCount + ", tf.constant(1))");
+               // whilecode
+               for (String code : scopeCode.get(currentScope)) {
+                   pw.println(code);
+               }
+               scopeCode.get(currentScope).clear();
+
+               double inc = (double) visit(ctx.pr(0)).getValue();
+               //dual
+               pw.println("        def f1(): return tf.add(" + ctx.IDENT(0) + ", tf.constant("+ inc +  "*np.identity(" + totaldim + "), dtype=tf.float64))");
+               pw.println("        def f2(): return " + ctx.IDENT(0));
+               pw.println("        " + ctx.IDENT(0) + " = tf.cond(tf.less(" + ctx.IDENT(0) + "[0,0], tf.constant(np.identity(" + totaldim + "), dtype=tf.float64)[0,0]), f1, f2)");
+
+               pw.println("        def f1(): return tf.subtract(" + ctx.IDENT(1) + ", tf.constant(" + inc + "*np.identity(" + totaldim + "), dtype=tf.float64))");
+               pw.println("        def f2(): return " + ctx.IDENT(1));
+               pw.println("        " + ctx.IDENT(1) + " = tf.cond(tf.greater(" + ctx.IDENT(1) + "[0,0], tf.constant(np.zeros((" + totaldim + "," + totaldim + ")), dtype=tf.float64)[0,0]), f1, f2)");
+
+
+               pw.println("        return sigma, loopCount" + testOpCount + ", " + ctx.IDENT(0) + "," + ctx.IDENT(1));
+               pw.println();
+
+               currentScope--;
+
+               scopeCode.get(currentScope).add("        sigma, loopCount" + testOpCount + ", " + ctx.IDENT(0) + ", " + ctx.IDENT(1) + " = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma, loopCount" + testOpCount + ", " + ctx.IDENT(0) + ", " + ctx.IDENT(1) + "])");
+
+           } else if (ctx.expr().getText().equals("true") && ctx.INTEGER() == null && ctx.LT() != null) {
+               //7
+
+               int testOpCount = TOCounter;
+               currentScope++;
+               if (scopeCode.size() <= currentScope) {
+                   scopeCode.add(new ArrayList<String >());
+               }
+
+               double epsilon = (double) visit(ctx.pr(0)).getValue();
+
+               visit(ctx.stat());
+
+
+               pw.println("    # Define WHILE Statement");
+               pw.println("    epsilon" + testOpCount + " = tf.Variable(" + epsilon + ", dtype=tf.float64)");
+               pw.println("    def condition" + testOpCount + "(sigma, " + ctx.IDENT(0) + ", " + ctx.IDENT(1) + "):");
+               pw.println("        remain = tf.reduce_sum(sigma)");
+
+               pw.println("        return tf.greater(remain, epsilon" + testOpCount + ")");
+
+               pw.println("    def body" + testOpCount + "(sigma, " + ctx.IDENT(0) + ", " + ctx.IDENT(1) + "):");
+               // whilecode
+               for (String code : scopeCode.get(currentScope)) {
+                   pw.println(code);
+               }
+               scopeCode.get(currentScope).clear();
+
+               double inc = (double) visit(ctx.pr(1)).getValue();
+               //dual
+               pw.println("        def f1(): return tf.add(" + ctx.IDENT(0) + ", tf.constant("+ inc +  "*np.identity(" + totaldim + "), dtype=tf.float64))");
+               pw.println("        def f2(): return " + ctx.IDENT(0));
+               pw.println("        " + ctx.IDENT(0) + " = tf.cond(tf.less(" + ctx.IDENT(0) + "[0,0], tf.constant(np.identity(" + totaldim + "), dtype=tf.float64)[0,0]), f1, f2)");
+
+               pw.println("        def f1(): return tf.subtract(" + ctx.IDENT(1) + ", tf.constant(" + inc + "*np.identity(" + totaldim + "), dtype=tf.float64))");
+               pw.println("        def f2(): return " + ctx.IDENT(1));
+               pw.println("        " + ctx.IDENT(1) + " = tf.cond(tf.greater(" + ctx.IDENT(1) + "[0,0], tf.constant(np.zeros((" + totaldim + "," + totaldim + ")), dtype=tf.float64)[0,0]), f1, f2)");
+
+
+               pw.println("        return sigma, " + ctx.IDENT(0) + ", " + ctx.IDENT(1));
+               pw.println();
+
+               currentScope--;
+
+               scopeCode.get(currentScope).add("        sigma, " + ctx.IDENT(0) + ", " +  ctx.IDENT(1) + " = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma, " + ctx.IDENT(0) + ", " +  ctx.IDENT(1) + "])");
+
+           } else if (ctx.expr().getText().equals("true") && ctx.INTEGER() != null && ctx.LT() != null) {
+               //8
+               int limit = Integer.parseInt(ctx.INTEGER().getText());
+
+
+               int testOpCount = TOCounter;
+               currentScope++;
+               if (scopeCode.size() <= currentScope) {
+                   scopeCode.add(new ArrayList<String >());
+               }
+
+               double epsilon = (double) visit(ctx.pr(0)).getValue();
+
+               visit(ctx.stat());
+
+               pw.println("    # Define WHILE Statement");
+               pw.println("    epsilon" + testOpCount + " = tf.Variable(" + epsilon + ", dtype=tf.float64)");
+               pw.println("    loopCount" + testOpCount + " = tf.Variable(0)");
+               pw.println("    def condition" + testOpCount + "(sigma, loopCount" + testOpCount + ", " + ctx.IDENT(0) + ", " + ctx.IDENT(1) + "):");
+               pw.println("        remain = tf.reduce_sum(sigma)");
+
+               pw.println("        return tf.logical_and(tf.less(loopCount" + testOpCount + ", tf.constant(" + limit + ")), tf.greater(remain, epsilon" + testOpCount + "))");
+
+               pw.println("    def body" + testOpCount + "(sigma, loopCount" + testOpCount +  ", " + ctx.IDENT(0) + ", " + ctx.IDENT(1) + "):");
+               pw.println("        loopCount" + testOpCount + " = tf.add(loopCount" + testOpCount + ", tf.constant(1))");
+               // whilecode
+               for (String code : scopeCode.get(currentScope)) {
+                   pw.println(code);
+               }
+               scopeCode.get(currentScope).clear();
+
+               double inc = (double) visit(ctx.pr(1)).getValue();
+               //dual
+               pw.println("        def f1(): return tf.add(" + ctx.IDENT(0) + ", tf.constant("+ inc +  "*np.identity(" + totaldim + "), dtype=tf.float64))");
+               pw.println("        def f2(): return " + ctx.IDENT(0));
+               pw.println("        " + ctx.IDENT(0) + " = tf.cond(tf.less(" + ctx.IDENT(0) + "[0,0], tf.constant(np.identity(" + totaldim + "), dtype=tf.float64)[0,0]), f1, f2)");
+
+               pw.println("        def f1(): return tf.subtract(" + ctx.IDENT(1) + ", tf.constant(" + inc + "*np.identity(" + totaldim + "), dtype=tf.float64))");
+               pw.println("        def f2(): return " + ctx.IDENT(1));
+               pw.println("        " + ctx.IDENT(1) + " = tf.cond(tf.greater(" + ctx.IDENT(1) + "[0,0], tf.constant(np.zeros((" + totaldim + "," + totaldim + ")), dtype=tf.float64)[0,0]), f1, f2)");
+
+
+               pw.println("        return sigma, loopCount" + testOpCount + ", " + ctx.IDENT(0) + ", " + ctx.IDENT(1));
+               pw.println();
+
+               currentScope--;
+
+               scopeCode.get(currentScope).add("        sigma, loopCount" + testOpCount + ", " + ctx.IDENT(0) + ", " + ctx.IDENT(1) + " = tf.while_loop(condition" + testOpCount + ", body" + testOpCount + ", [sigma, loopCount" + testOpCount + ", " + ctx.IDENT(0) + ", " + ctx.IDENT(1) + "])");
+
+           }
+       }
+
         return null;
     }
 
@@ -1334,11 +1691,20 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
             scopeCode.get(currentScope).add("        sigma" + testOpCount + "_choose" + (i+1) + " = sigma");
         }
 
+        if (pr.get(0).getValue().getClass() == String.class){
+            scopeCode.get(currentScope).add("        sigma = tf.matmul(sigma" + testOpCount + "_choose1, "+ pr.get(0).getValue() + ")");
+
+            for (int i = 1; i < ctx.stat().size(); i++) {
+                scopeCode.get(currentScope).add("        sigma = tf.add(sigma, tf.matmul(sigma" + testOpCount + "_choose" + (i + 1) + ", " + pr.get(i).getValue() + "))");
+
+            }
+        } else {
         scopeCode.get(currentScope).add("        sigma = tf.matmul(sigma" + testOpCount + "_choose1, tf.constant(" + pr.get(0).getValue() + "*np.identity(" + totaldim + "), dtype=tf.float64))");
 
         for (int i = 1; i < ctx.stat().size(); i++) {
             scopeCode.get(currentScope).add("        sigma = tf.add(sigma, tf.matmul(sigma" + testOpCount + "_choose" + (i + 1) + ", tf.constant(" + pr.get(i).getValue() + "*np.identity(" + totaldim + "), dtype=tf.float64)))");
 
+        }
         }
 /*
         pw.println("# Define CHOOSE Statement");
@@ -1496,6 +1862,12 @@ public class CodeGeneratorVisitor extends pWhileBaseVisitor<Value> {
         scopeCode.add(new ArrayList<String>());
 
         visit(ctx.stat(0));
+// for dual
+        for (int i = 0; i < ctx.para().size(); i++) {
+            for (int j = 0; j < ctx.para(i).IDENT().size(); j++) {
+                pw.println("    " + ctx.para(i).IDENT(j) + " = tf.Variable(" + ctx.para(i).IDENT(j) + "*np.identity(" + totaldim +"), dtype=tf.float64)");
+            }
+        }
 
         visit(ctx.stat(1));
 
