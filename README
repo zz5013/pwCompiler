@@ -1,19 +1,21 @@
-1. extend Choose
-2. Research on Random Walk
-
-
 How To Run the Compiler in Terminal:
-1. go to "pwhile" directory
 
-2. to compile:
+1. modify the `compile' file as follows:
+   $ java -cp [D1]:[D2]:...:[Dn] pwCompiler.Main $1
+   $ exit $?
+   where [D1], [D2], ..., [Dn] should be replaced by file paths of all dependencies of Java, separated by semicolons. 
+
+2. open a terminal, and go to "pwhile" directory
+
+3. to compile:
 > make
 
-3. set up ruby frontend:
+4. set up ruby frontend:
 > #!/usr/bin/env ruby
 > chmod +x compile
 
-4. to run the compiler:
+5. to run the compiler:
 > ./compile filename.pw
 
-5. to run the output program: (make sure you have Python and TensorFlow installed)
+6. to run the output program: (make sure you have Python and TensorFlow installed)
 > python filename.py
