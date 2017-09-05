@@ -45,12 +45,12 @@ public class  Main {
 
         String inputFilePath = null;
         File inFile = null;
-/*
+
         if (args.length > 0) {
             inputFilePath = args[0];
         }
-*/
-        inputFilePath = "test.pw";
+
+     //   inputFilePath = "test.pw";
         InputStream is = System.in;
         if (inputFilePath != null) {
             inFile = new File(inputFilePath);
