@@ -1,4 +1,10 @@
-How To Run the Compiler in Terminal:
+Welcome to the PWhile-TensorFlow Compiler!
+
+This compiler will interprets the probabilistics programming languages `Probabilistic While', pWhile in short, into the newly developing Python library TensorFlow!
+
+----------------------------------------------------------
+
+How to Run the Compiler in Terminal:
 
 1. modify the `compile' file as follows:
    $ java -cp [D1]:[D2]:...:[Dn] pwCompiler.Main $1
@@ -19,3 +25,75 @@ How To Run the Compiler in Terminal:
 
 6. to run the output program: (make sure you have Python and TensorFlow installed)
 > python filename.py
+
+----------------------------------------------------------
+
+PWHILE'S MAIN SYNTAX
+
+stat  : SKIPP                                   #skip
+      | STOP                                    #stop
+      | IDENT DECLARE valueRange                #declareVariable
+      | IDENT ASSIGN expr                       #assignment
+      | IDENT RDASSIGN valueRange               #randomAssignment
+      | IF expr THEN stat ELSE stat FI          #if
+      | WHILE expr DO (OPEN_SQUARE_BRACKET INTEGER CLOSE_SQUARE_BRACKET)? (OPEN_SQUARE_BRACKET LT pr CLOSE_SQUARE_BRACKET)? (OPEN_SQUARE_BRACKET IDENT COMMA pr COMMA IDENT CLOSE_SQUARE_BRACKET)? stat OD  #while
+      | CHOOSE pr DECLARE stat (ORR pr DECLARE stat)+ RO   #choose
+      | IDENT binOpP2 SEQ pr                     #paraInc
+      | stat SEMICOLON stat                     #statlist
+;
+
+expr  : INTEGER                                 #integer
+      | BOOL                                    #bool
+      | IDENT                                   #identifier
+      | expr binOpP1 expr                       #binOp1Expr
+      | expr binOpP2 expr                       #binOp2Expr
+      | expr binOpP3 expr                       #binOp3Expr
+      | expr binOpP4 expr                       #binOp4Expr
+      | expr binOpP5 expr                       #binOp5Expr
+      | expr binOpP6 expr                       #binOp6Expr
+      | unaryOp expr                            #unaryOpExpr
+      | OPEN_PARENTHESES expr CLOSE_PARENTHESES #nestedExpr
+;
+
+pr    : INTEGER DIV INTEGER  #fraction
+      | MINUS? DOT INTEGER   #decimal
+      | INTEGER              #oneOrZero
+      | IDENT                #prVar
+;
+
+valueRange: OPEN_CURLY_BRACKET (expr(COMMA expr)*)? CLOSE_CURLY_BRACKET
+          | OPEN_CURLY_BRACKET INTEGER DDOT INTEGER CLOSE_CURLY_BRACKET
+;
+
+para: PARA (IDENT DECLARE OPEN_SQUARE_BRACKET pr COMMA pr COMMA pr CLOSE_SQUARE_BRACKET)+ IDENT;
+
+prog: (para)* VAR stat SEMICOLON BEGIN stat SEMICOLON END EOF;
+
+
+----------------------------------------------------------
+
+EXAMPLE PWHILE PROGRAM:
+
+#######################
+##  PARAMETER STAGE  ## 
+#######################
+## For each time, take (p, q) as (0.0, 1.0), (0.1, 0.9), (0.2, 0.8), ..., (1.0, 0.0)
+para
+  p : [0, 1, 10]     
+  q
+#########################
+##  DECLARATION STAGE  ## 
+#########################
+## Declare a's variable scope
+var
+  a : {1..10};
+##########################
+##  MAIN PROGRAM STAGE  ## 
+##########################
+## randomly assign `a' a value
+begin
+  choose p: a ?= {1..5} or q: a ?= {6..10} ro;
+  stop;
+end
+
+
