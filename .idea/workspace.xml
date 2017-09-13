@@ -1,0 +1,1194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/src/pwCompiler/CodeGeneratorVisitor.java" line="1582" mnemonic="2" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="208508da-fd9a-4480-a76c-2d43ef2aca9e" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/030-DM-GAPP-TRAN-5884F520-8C6C-11E5-865D-960C7D84A436.pdf" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/CodeGeneratorVisitor.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/CodeGeneratorVisitor.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/PrintVisitPath.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/PrintVisitPath.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileBaseListener.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileBaseListener.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileBaseVisitor.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileBaseVisitor.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileLexer.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileLexer.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileListener.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileListener.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$AssignmentContext.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$AssignmentContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$BinOp1ExprContext.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$BinOp1ExprContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$BinOp2ExprContext.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$BinOp2ExprContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$BinOp3ExprContext.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$BinOp3ExprContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$BinOp4ExprContext.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$BinOp4ExprContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$BinOp5ExprContext.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$BinOp5ExprContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$BinOp6ExprContext.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$BinOp6ExprContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$BinOpP1Context.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$BinOpP1Context.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$BinOpP2Context.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$BinOpP2Context.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$BinOpP3Context.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$BinOpP3Context.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$BinOpP4Context.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$BinOpP4Context.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$BinOpP5Context.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$BinOpP5Context.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$BinOpP6Context.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$BinOpP6Context.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$BoolContext.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$BoolContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$ChooseContext.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$ChooseContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$DecimalContext.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$DecimalContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$DeclareVariableContext.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$DeclareVariableContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$ExprContext.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$ExprContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$FractionContext.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$FractionContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$IdentifierContext.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$IdentifierContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$IfContext.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$IfContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$IntegerContext.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$IntegerContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$NestedExprContext.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$NestedExprContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$PrContext.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$PrContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$ProgContext.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$ProgContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$RandomAssignmentContext.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$RandomAssignmentContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$SkipContext.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$SkipContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$StatContext.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$StatContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$StatlistContext.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$StatlistContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$StopContext.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$StopContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$UnaryOpBoolContext.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$UnaryOpBoolContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$UnaryOpContext.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$UnaryOpContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$UnaryOpExprContext.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$UnaryOpExprContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$UnaryOpIntContext.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$UnaryOpIntContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$ValueRangeContext.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$ValueRangeContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$WhileContext.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser$WhileContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileParser.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileVisitor.class" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileVisitor.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README" afterPath="$PROJECT_DIR$/README" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/compile" afterPath="$PROJECT_DIR$/compile" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dining3pnew.pw" afterPath="$PROJECT_DIR$/dining3pnew.pw" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dining3pnew.py" afterPath="$PROJECT_DIR$/dining3pnew.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dual1.py" afterPath="$PROJECT_DIR$/dual1.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pWhile.g4" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pWhile.g4" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhile.tokens" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhile.tokens" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileLexer.tokens" afterPath="$PROJECT_DIR$/out/production/pwCompiler/pwCompiler/pWhileLexer.tokens" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pwCompiler.iml" afterPath="$PROJECT_DIR$/pwCompiler.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test.pw" afterPath="$PROJECT_DIR$/test.pw" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test.py" afterPath="$PROJECT_DIR$/test.py" />
+    </list>
+    <ignored path="$PROJECT_DIR$/out/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="CodeGeneratorVisitor.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pwCompiler/CodeGeneratorVisitor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="739">
+              <caret line="1790" column="56" lean-forward="true" selection-start-line="1790" selection-start-column="4" selection-end-line="1790" selection-end-column="56" />
+              <folding>
+                <element signature="method#CodeGeneratorVisitor#0;class#CodeGeneratorVisitor#0" expanded="false" />
+                <element signature="method#visitInteger#0;class#CodeGeneratorVisitor#0" expanded="false" />
+                <element signature="method#visitBool#0;class#CodeGeneratorVisitor#0" expanded="false" />
+                <element signature="method#visitValueRange#0;class#CodeGeneratorVisitor#0" expanded="false" />
+                <element signature="method#visitIdentifier#0;class#CodeGeneratorVisitor#0" expanded="false" />
+                <element signature="method#visitDeclareVariable#0;class#CodeGeneratorVisitor#0" expanded="false" />
+                <element signature="method#visitAssignment#0;class#CodeGeneratorVisitor#0" expanded="false" />
+                <element signature="method#visitRandomAssignment#0;class#CodeGeneratorVisitor#0" expanded="false" />
+                <element signature="method#visitBinOp1Expr#0;class#CodeGeneratorVisitor#0" expanded="false" />
+                <element signature="method#visitBinOp2Expr#0;class#CodeGeneratorVisitor#0" expanded="false" />
+                <element signature="method#visitBinOp3Expr#0;class#CodeGeneratorVisitor#0" expanded="false" />
+                <element signature="method#visitBinOp4Expr#0;class#CodeGeneratorVisitor#0" expanded="false" />
+                <element signature="method#visitBinOp5Expr#0;class#CodeGeneratorVisitor#0" expanded="false" />
+                <element signature="method#visitBinOp6Expr#0;class#CodeGeneratorVisitor#0" expanded="false" />
+                <element signature="method#visitUnaryOpExpr#0;class#CodeGeneratorVisitor#0" expanded="false" />
+                <element signature="method#visitIf#0;class#CodeGeneratorVisitor#0" expanded="false" />
+                <element signature="method#visitWhile#0;class#CodeGeneratorVisitor#0" expanded="false" />
+                <element signature="method#visitChoose#0;class#CodeGeneratorVisitor#0" expanded="false" />
+                <element signature="method#visitFraction#0;class#CodeGeneratorVisitor#0" expanded="false" />
+                <element signature="method#visitDecimal#0;class#CodeGeneratorVisitor#0" expanded="false" />
+                <element signature="method#visitOneOrZero#0;class#CodeGeneratorVisitor#0" expanded="false" />
+                <element signature="method#visitParaInc#0;class#CodeGeneratorVisitor#0" expanded="false" />
+                <element signature="method#visitProg#0;class#CodeGeneratorVisitor#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dining3pnew.pw" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dining3pnew.pw">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="360">
+              <caret line="24" column="5" lean-forward="true" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pwCompiler/Main.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="79">
+              <caret line="45" column="36" lean-forward="true" selection-start-line="45" selection-start-column="36" selection-end-line="45" selection-end-column="36" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Makefile" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Makefile">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="405">
+              <caret line="27" column="6" lean-forward="true" selection-start-line="27" selection-start-column="6" selection-end-line="27" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dual1.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dual1.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="853">
+              <caret line="119" column="27" lean-forward="false" selection-start-line="119" selection-start-column="27" selection-end-line="119" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dual1.pw" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dual1.pw">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="20" column="3" lean-forward="true" selection-start-line="20" selection-start-column="3" selection-end-line="20" selection-end-column="3" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="1DRandomWalk.pw" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/1DRandomWalk.pw">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="2DRandomWalk.pw" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/2DRandomWalk.pw">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="10" selection-end-column="3" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RandomWalk.pw" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/RandomWalk.pw">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RandomWalk.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/test/RandomWalk.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1231">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>visitPr</find>
+      <find>visitDEc</find>
+      <find>visitDeci</find>
+      <find>pw.println</find>
+      <find>visitde</find>
+      <find>np.identity</find>
+      <find>tf.constant</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GradleLocalSettings">
+    <option name="externalProjectsViewState">
+      <projects_view />
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/test2.pw" />
+        <option value="$PROJECT_DIR$/src/pwCompiler/PrintVisitPath.java" />
+        <option value="$PROJECT_DIR$/Makefile" />
+        <option value="$PROJECT_DIR$/dining3pnew.pw" />
+        <option value="$PROJECT_DIR$/src/pWhile.g4" />
+        <option value="$PROJECT_DIR$/dual1.py" />
+        <option value="$PROJECT_DIR$/src/pwCompiler/CodeGeneratorVisitor.java" />
+        <option value="$PROJECT_DIR$/test.py" />
+        <option value="$PROJECT_DIR$/test.pw" />
+        <option value="$PROJECT_DIR$/src/pwCompiler/Main.java" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="419" />
+    <option name="y" value="50" />
+    <option name="width" value="1362" />
+    <option name="height" value="996" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pwhile" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pwhile" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pwhile" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pwhile" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pwhile" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pwhile" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pwhile" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pwhile" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pwCompiler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/bin/lib/intellij-plugin-v4.jar!/" />
+    <property name="$PROJECT_DIR$/src/pWhile.g4::/auto-gen" value="false" />
+    <property name="$PROJECT_DIR$/src/pWhile.g4::/output-dir" value="$PROJECT_DIR$/src" />
+    <property name="$PROJECT_DIR$/src/pWhile.g4::/package" value="pwCompiler" />
+    <property name="$PROJECT_DIR$/src/pWhile.g4::/gen-listener" value="true" />
+    <property name="$PROJECT_DIR$/src/pWhile.g4::/gen-visitor" value="true" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Main">
+    <configuration default="false" name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="pwCompiler.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="pwCompiler.Main" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <predefined_log_file id="idea.log" enabled="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android App">
+      <module name="" />
+      <option name="DEPLOY" value="true" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="DEBUGGER_TYPE" value="Java" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <Java />
+      <Profilers>
+        <option name="ENABLE_ADVANCED_PROFILING" value="true" />
+        <option name="GAPID_ENABLED" value="false" />
+        <option name="GAPID_DISABLE_PCS" value="false" />
+        <option name="SUPPORT_LIB_ENABLED" value="true" />
+        <option name="INSTRUMENTATION_ENABLED" value="true" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="EXTRA_OPTIONS" value="" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="DEBUGGER_TYPE" value="Java" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <Java />
+      <Profilers>
+        <option name="ENABLE_ADVANCED_PROFILING" value="true" />
+        <option name="GAPID_ENABLED" value="false" />
+        <option name="GAPID_DISABLE_PCS" value="false" />
+        <option name="SUPPORT_LIB_ENABLED" value="true" />
+        <option name="INSTRUMENTATION_ENABLED" value="true" />
+      </Profilers>
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <module />
+      <method />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="true" type="JarApplication" factoryName="JAR Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="Java Scratch" factoryName="Java Scratch">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="SCRATCH_FILE_ID" value="0" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="pwhile" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType" factoryName="Kotlin script">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method />
+    </configuration>
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="Application.Main" />
+    </list>
+    <recent_temporary>
+      <list size="1">
+        <item index="0" class="java.lang.String" itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="208508da-fd9a-4480-a76c-2d43ef2aca9e" name="Default" comment="" />
+      <created>1499605177661</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1499605177661</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="419" y="50" width="1362" height="996" extended-state="0" />
+    <editor active="false" />
+    <layout>
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Tool Output" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32960895" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36105034" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32996634" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2514706" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="ANTLR Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3238512" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.py" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="5" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/pWhile.g4">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pwCompiler/pWhileParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+          <folding>
+            <element signature="e#21796#21797#0" expanded="true" />
+            <element signature="e#21845#21846#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.pw">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="3" lean-forward="false" selection-start-line="8" selection-start-column="3" selection-end-line="8" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pwCompiler/CodeGeneratorVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+          <folding>
+            <element signature="method#CodeGeneratorVisitor#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitInteger#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitBool#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitValueRange#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitIdentifier#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitDeclareVariable#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitAssignment#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitRandomAssignment#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitBinOp1Expr#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitBinOp2Expr#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitBinOp3Expr#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitBinOp4Expr#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitBinOp5Expr#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitBinOp6Expr#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitUnaryOpExpr#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitIf#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitWhile#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitChoose#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitFraction#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitDecimal#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitOneOrZero#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitParaInc#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitProg#0;class#CodeGeneratorVisitor#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pwCompiler/pWhileBaseVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="3" lean-forward="false" selection-start-line="11" selection-start-column="3" selection-end-line="11" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pwCompiler/pWhileVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="3" lean-forward="false" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pwCompiler/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="45" column="36" lean-forward="false" selection-start-line="45" selection-start-column="36" selection-end-line="45" selection-end-column="36" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pwCompiler/PrintVisitPath.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pWhile.g4">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1905">
+          <caret line="127" column="53" lean-forward="false" selection-start-line="127" selection-start-column="53" selection-end-line="127" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pwCompiler/pWhileParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+          <folding>
+            <element signature="e#21796#21797#0" expanded="true" />
+            <element signature="e#21845#21846#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.pw">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="3" lean-forward="false" selection-start-line="8" selection-start-column="3" selection-end-line="8" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pwCompiler/CodeGeneratorVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+          <folding>
+            <element signature="method#CodeGeneratorVisitor#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitInteger#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitBool#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitValueRange#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitIdentifier#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitDeclareVariable#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitAssignment#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitRandomAssignment#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitBinOp1Expr#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitBinOp2Expr#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitBinOp3Expr#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitBinOp4Expr#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitBinOp5Expr#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitBinOp6Expr#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitUnaryOpExpr#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitIf#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitWhile#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitChoose#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitFraction#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitDecimal#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitOneOrZero#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitParaInc#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitProg#0;class#CodeGeneratorVisitor#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pwCompiler/pWhileBaseVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="3" lean-forward="false" selection-start-line="11" selection-start-column="3" selection-end-line="11" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pwCompiler/pWhileVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="3" lean-forward="false" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pwCompiler/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="45" column="36" lean-forward="true" selection-start-line="45" selection-start-column="36" selection-end-line="45" selection-end-column="36" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pwCompiler/PrintVisitPath.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pWhile.g4">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1905">
+          <caret line="127" column="53" lean-forward="false" selection-start-line="127" selection-start-column="53" selection-end-line="127" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pwCompiler/pWhileParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+          <folding>
+            <element signature="e#21796#21797#0" expanded="true" />
+            <element signature="e#21845#21846#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.pw">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="3" lean-forward="true" selection-start-line="8" selection-start-column="3" selection-end-line="8" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test2.py" />
+    <entry file="file://$PROJECT_DIR$/test2.pw" />
+    <entry file="file://$PROJECT_DIR$/src/pwCompiler/pWhileListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="8" column="17" lean-forward="false" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pwCompiler/pWhileBaseListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pwCompiler/pWhileVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="282">
+          <caret line="224" column="59" lean-forward="true" selection-start-line="224" selection-start-column="59" selection-end-line="224" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pwCompiler/pWhileBaseVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="139" column="7" lean-forward="false" selection-start-line="139" selection-start-column="7" selection-end-line="139" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pwCompiler/PrintVisitPath.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="473">
+          <caret line="217" column="46" lean-forward="false" selection-start-line="217" selection-start-column="46" selection-end-line="217" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/nested1.pw">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="16" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/choose1.pw">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/compile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="7" lean-forward="false" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dining3p.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dining3p.pw">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="615">
+          <caret line="41" column="5" lean-forward="true" selection-start-line="41" selection-start-column="5" selection-end-line="41" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="35" column="24" lean-forward="false" selection-start-line="35" selection-start-column="24" selection-end-line="35" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.pw">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="5" lean-forward="false" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dining3pnew.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3376">
+          <caret line="734" column="22" lean-forward="false" selection-start-line="734" selection-start-column="22" selection-end-line="734" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pwCompiler/pWhileParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8595">
+          <caret line="616" column="25" lean-forward="false" selection-start-line="616" selection-start-column="25" selection-end-line="616" selection-end-column="25" />
+          <folding>
+            <element signature="e#21796#21797#0" expanded="true" />
+            <element signature="e#21845#21846#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pWhile.g4">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="96" column="13" lean-forward="true" selection-start-line="96" selection-start-column="13" selection-end-line="96" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pwCompiler/Value.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="5" lean-forward="true" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
+          <folding>
+            <element signature="e#682#683#0" expanded="true" />
+            <element signature="e#710#711#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pwCompiler/pWhile.tokens">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pwCompiler/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="79">
+          <caret line="45" column="36" lean-forward="true" selection-start-line="45" selection-start-column="36" selection-end-line="45" selection-end-column="36" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Makefile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" column="6" lean-forward="true" selection-start-line="27" selection-start-column="6" selection-end-line="27" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pwCompiler/CodeGeneratorVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="739">
+          <caret line="1790" column="56" lean-forward="true" selection-start-line="1790" selection-start-column="4" selection-end-line="1790" selection-end-column="56" />
+          <folding>
+            <element signature="method#CodeGeneratorVisitor#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitInteger#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitBool#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitValueRange#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitIdentifier#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitDeclareVariable#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitAssignment#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitRandomAssignment#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitBinOp1Expr#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitBinOp2Expr#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitBinOp3Expr#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitBinOp4Expr#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitBinOp5Expr#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitBinOp6Expr#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitUnaryOpExpr#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitIf#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitWhile#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitChoose#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitFraction#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitDecimal#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitOneOrZero#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitParaInc#0;class#CodeGeneratorVisitor#0" expanded="false" />
+            <element signature="method#visitProg#0;class#CodeGeneratorVisitor#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dining3pnew.pw">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" column="5" lean-forward="true" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dual1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="853">
+          <caret line="119" column="27" lean-forward="false" selection-start-line="119" selection-start-column="27" selection-end-line="119" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dual1.pw">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="3" lean-forward="true" selection-start-line="20" selection-start-column="3" selection-end-line="20" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/1DRandomWalk.pw">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/2DRandomWalk.pw">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="10" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/RandomWalk.pw">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/RandomWalk.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1231">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8 (1)</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>pwCompiler</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

@@ -6,6 +6,7 @@ grammar pWhile;
 BOOL: 'true' | 'false';
 INTEGER: SIGN?DIGIT+ ;
 
+
 //PAIR_LIT: NULL;
 
 // operators
@@ -23,6 +24,7 @@ NEQ:        '!=';
 AND:        '&&';
 OR:         '||';
 NOT:        '!' ;
+SEQ:        '=';
 
 
 //stats
@@ -53,6 +55,7 @@ BEGIN:      'begin';
 END:        'end';
 SKIPP:      'skip';
 STOP:       'stop';
+PARA:       'para';
 
 //brackets
 OPEN_PARENTHESES:     '(';
@@ -74,7 +77,7 @@ fragment CHAR_FRAG: ~('\\'|'\''|'"') | '\\'ESCAPEDCHAR;
 fragment DIGIT : '0'..'9' ;
 fragment SIGN: '+' | '-'  ;
 
-ZERO:     '0';
+
 
 
 //escaped characters
@@ -124,8 +127,9 @@ stat  : SKIPP                                   #skip
       | IDENT ASSIGN expr                       #assignment
       | IDENT RDASSIGN valueRange               #randomAssignment
       | IF expr THEN stat ELSE stat FI          #if
-      | WHILE expr DO (OPEN_SQUARE_BRACKET INTEGER CLOSE_SQUARE_BRACKET)? (OPEN_SQUARE_BRACKET LT pr CLOSE_SQUARE_BRACKET)? stat OD  #while
+      | WHILE expr DO (OPEN_SQUARE_BRACKET INTEGER CLOSE_SQUARE_BRACKET)? (OPEN_SQUARE_BRACKET LT pr CLOSE_SQUARE_BRACKET)? (OPEN_SQUARE_BRACKET IDENT COMMA pr COMMA IDENT CLOSE_SQUARE_BRACKET)? stat OD  #while
       | CHOOSE pr DECLARE stat (ORR pr DECLARE stat)+ RO   #choose
+      | IDENT binOpP2 SEQ pr                     #paraInc
       | stat SEMICOLON stat                     #statlist
 ;
 
@@ -143,14 +147,19 @@ expr  : INTEGER                                 #integer
 ;
 
 pr    : INTEGER DIV INTEGER  #fraction
-      | DOT INTEGER    #decimal
+      | MINUS? DOT INTEGER   #decimal
+      | INTEGER              #oneOrZero
+      | IDENT                #prVar
 ;
 
 valueRange: OPEN_CURLY_BRACKET (expr(COMMA expr)*)? CLOSE_CURLY_BRACKET
           | OPEN_CURLY_BRACKET INTEGER DDOT INTEGER CLOSE_CURLY_BRACKET
 ;
 
+
+para: PARA (IDENT DECLARE OPEN_SQUARE_BRACKET pr COMMA pr COMMA pr CLOSE_SQUARE_BRACKET)+ IDENT;
+
 // main program
-prog: VAR stat SEMICOLON BEGIN stat SEMICOLON END EOF;
+prog: (para)* VAR stat SEMICOLON BEGIN stat SEMICOLON END EOF;
 // EOF indicates that the program must consume to the end of the input.
 

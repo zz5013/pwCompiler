@@ -8,12 +8,15 @@ para = -1
 result = [[] for x in range(len(paras))]
 for (ak, am, bk, bm) in paras:
     para = para + 1
+
     # Declare Variable Scopes
     sigma = tf.Variable(np.full((1,2), 1.0/2, dtype=float), name = "sigma")
 
     # Declare Variable Scopes
     sigma = tf.Variable(np.full((1,4), 1.0/4, dtype=float), name = "sigma")
 
+    ak = tf.Variable(ak*np.identity(4), dtype=tf.float64)
+    am = tf.Variable(am*np.identity(4), dtype=tf.float64)
     # Generate Update Operator
     u = np.zeros((2, 2))
     u[:, 0] = 1
@@ -91,10 +94,10 @@ for (ak, am, bk, bm) in paras:
     updateOp7 = tf.Variable(updateOp)
 
     # Define WHILE Statement
-    def condition2(sigma):
+    def condition2(sigma, ak, am):
         sigma = tf.matmul(sigma, testOp2)
         return tf.logical_not(tf.reduce_all(tf.equal(sigma, tf.zeros([4], dtype=tf.float64))))
-    def body2(sigma):
+    def body2(sigma, ak, am):
         outOfLoop = tf.matmul(sigma, testNOp2)
         sigma = tf.matmul(sigma, testOp2)
         sigma3_ogn = sigma
@@ -105,8 +108,20 @@ for (ak, am, bk, bm) in paras:
         sigma = sigma4_ogn
         sigma = tf.matmul(sigma, updateOp5)
         sigma4_choose2 = sigma
-        sigma = tf.matmul(sigma4_choose1, tf.constant(ak*np.identity(4), dtype=tf.float64))
-        sigma = tf.add(sigma, tf.matmul(sigma4_choose2, tf.constant(am*np.identity(4), dtype=tf.float64)))
+
+        sigma = tf.matmul(sigma4_choose1, ak)
+        #ak = tf.add(ak, tf.constant(0.1*np.identity(4), dtype=tf.float64))
+        def f1(): return tf.add(ak, tf.constant(0.1*np.identity(4), dtype=tf.float64))
+        def f2(): return ak
+        ak = tf.cond(tf.less(ak[0,0], tf.constant(np.identity(4), dtype=tf.float64)[0,0]), f1, f2)
+
+
+        sigma = tf.add(sigma, tf.matmul(sigma4_choose2, am))
+        #am = tf.subtract(am, tf.constant(0.1*np.identity(4), dtype=tf.float64))
+        def f1(): return tf.add(am, tf.constant(-0.1*np.identity(4), dtype=tf.float64))
+        def f2(): return am
+        am = tf.cond(tf.greater(am[0,0], tf.constant(np.zeros((4,4)), dtype=tf.float64)[0,0]), f1, f2)
+
         sigma3_then = sigma
         sigma = tf.matmul(sigma3_ogn, testNOp3)
         sigma5_ogn = sigma
@@ -120,7 +135,7 @@ for (ak, am, bk, bm) in paras:
         sigma3_else = sigma
         sigma = tf.add(sigma3_then, sigma3_else)
         sigma = tf.add(sigma, outOfLoop)
-        return sigma
+        return sigma, ak, am
 
     # Main Program
     with tf.Session() as sess:
@@ -134,7 +149,7 @@ for (ak, am, bk, bm) in paras:
         sigma = tf.matmul(sigma1_choose1, tf.constant(0.5*np.identity(4), dtype=tf.float64))
         sigma = tf.add(sigma, tf.matmul(sigma1_choose2, tf.constant(0.5*np.identity(4), dtype=tf.float64)))
         sigma = tf.matmul(sigma, updateOp3)
-        sigma = tf.while_loop(condition2, body2, [sigma])
+        sigma, ak, am = tf.while_loop(condition2, body2, [sigma, ak, am])
         print sess.run(sigma)
         result[para] = sess.run(sigma)[0]
 
