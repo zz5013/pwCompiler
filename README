@@ -4,7 +4,7 @@ This compiler will interprets the probabilistics programming languages `Probabil
 
 ----------------------------------------------------------
 
-How to Run the Compiler in Terminal:
+HOW TO RUN THE COMPILER IN TERMINAL:
 
 1. modify the `compile' file as follows:
    $ java -cp [D1]:[D2]:...:[Dn] pwCompiler.Main $1
@@ -69,6 +69,7 @@ para: PARA (IDENT DECLARE OPEN_SQUARE_BRACKET pr COMMA pr COMMA pr CLOSE_SQUARE_
 
 prog: (para)* VAR stat SEMICOLON BEGIN stat SEMICOLON END EOF;
 
+##See ./src/pWhile.g4 for more details
 
 ----------------------------------------------------------
 
