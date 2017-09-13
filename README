@@ -1,17 +1,17 @@
 Welcome to the PWhile-TensorFlow Compiler!
 
-This compiler will interprets the probabilistics programming languages `Probabilistic While', pWhile in short, into the newly developing Python library TensorFlow!
+This compiler will interprets the probabilistic programming languages `Probabilistic While', pWhile in short, into the newly developing Python library TensorFlow!
 
 ----------------------------------------------------------
 
-HOW TO RUN THE COMPILER IN TERMINAL:
+[HOW TO RUN THE COMPILER IN TERMINAL]
 
 1. modify the `compile' file as follows:
    $ java -cp [D1]:[D2]:...:[Dn] pwCompiler.Main $1
    $ exit $?
    where [D1], [D2], ..., [Dn] should be replaced by file paths of all dependencies of Java, separated by semicolons. 
 
-2. open a terminal, and go to "pwhile" directory
+2. open a terminal, and then go to "pwhile" directory
 
 3. to compile:
 > make
@@ -28,7 +28,7 @@ HOW TO RUN THE COMPILER IN TERMINAL:
 
 ----------------------------------------------------------
 
-PWHILE'S MAIN SYNTAX
+[PWHILE'S MAIN SYNTAX]
 
 stat  : SKIPP                                   #skip
       | STOP                                    #stop
@@ -73,7 +73,7 @@ prog: (para)* VAR stat SEMICOLON BEGIN stat SEMICOLON END EOF;
 
 ----------------------------------------------------------
 
-EXAMPLE PWHILE PROGRAM:
+[EXAMPLE PWHILE PROGRAM]
 
 #######################
 ##  PARAMETER STAGE  ## 
